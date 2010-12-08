@@ -26,9 +26,9 @@ def main():
     b = player_box([255, 0, 0], 
                    [0, 0])
     b.add_weapons((base_weapon((1,0), K_d),
-                   base_weapon((1,1), K_s),
-                   base_weapon((1,-1), K_a),
-                   base_weapon((0,-1), K_w)))
+                   base_weapon((0,1), K_s),
+                   base_weapon((0,-1), K_a),
+                   base_weapon((-1,0), K_w)))
 #    b.add_weapon((triple_directed_weapon((1,0))))
     for _ in range(30):
         en = enemy_box([random.randint(1,255),
@@ -39,7 +39,7 @@ def main():
         enemies.add(en)
     
     while not END:
-        clock.tick(30)
+        clock.tick(45)
         for e in pygame.event.get():
             if e.type == QUIT:
                 END = True
@@ -56,10 +56,8 @@ def main():
         screen.blit(background, [0,0])
         screen.blit(b.image, b.rect)
         rectlist = bullets.draw(screen)
-        pygame.display.update(rectlist)
-        rectlist = enemies.draw(screen)
-        pygame.display.update(rectlist)
-        rectlist = junkie.draw(screen)
+        rectlist += enemies.draw(screen)
+        rectlist += junkie.draw(screen)
         pygame.display.update(rectlist)
         pygame.display.update()
 
