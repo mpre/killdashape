@@ -1,0 +1,4 @@
+1 - Modificare la classe bullet in modo che il movimento sia basato
+    su un vettore direzione
+2 - Aggiungere attributo arma al player in modo da poter modificare 
+    facilmente il modo in cui si uccidono i nemici
