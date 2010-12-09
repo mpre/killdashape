@@ -120,6 +120,24 @@ def main():
                     END = True
                 elif e.type == KEYDOWN and e.key == K_SPACE:
                     paused = False
+            pause_f = pygame.font.Font(None, 30)
+            pause_i = pause_f.render('PAUSED', 
+                                     True, K_FONT_COLOR)
+            pause_r = pause_i.get_rect()
+            pause_r.center = (K_WINDOW_DIM[0]/2, K_WINDOW_DIM[1]/2)
+            
+            screen.blit(background, [0,0])
+            screen.blit(b.image, b.rect)
+            screen.blit(point_i, point_r)
+            screen.blit(hp_i, hp_r)
+            screen.blit(level_i, level_r)
+            screen.blit(pause_i, pause_r)
+            rectlist = bullets.draw(screen)
+            rectlist += enemies.draw(screen)
+            rectlist += junkie.draw(screen)
+            rectlist += en_bullets.draw(screen)
+            pygame.display.update(rectlist)
+            pygame.display.update()
             
 
 if __name__ == '__main__':
