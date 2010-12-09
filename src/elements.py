@@ -11,8 +11,9 @@ try:
     from killdashape_k import *
     from global_vars import *
     from useful_lib import *
+    from sound_master import *
 except:
-    print "cazzo non ha importato bene"
+    print "cazzo non ha importato bene pappa"
 
 class bullet(pygame.sprite.Sprite):
     """Single bullet class"""
@@ -69,6 +70,7 @@ class enemy_box(box):
                 self.rect = self.rect.move(-K_ENEMY_MOV, 0)
 #    
     def kill(self):
+        snd_master.play('enemy_explosion')
         enemies.remove(self)
         for vector in ((1,0), (1,1), (0,1), (-1,1), (-1,0), (-1,-1), (0,-1), (1, -1)):
                 e = enemy_junkie(self.color, self.rect.center, vector)
@@ -227,6 +229,7 @@ class triple_directed_weapon(pygame.sprite.Sprite):
                         (random.randint(1,255))),
                         (self.father.rect.bottomright),
                          self.direction) 
+            snd_master.play('shoot')
             bullets.add(x)
         else:
             self.cooldown -= 1

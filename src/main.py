@@ -12,8 +12,9 @@ try:
     from killdashape_k import *
     from elements import *
     from global_vars import *
+    from sound_master import *
 except:
-    print "cazzo non ha importato bene"
+    print "cazzo non ha importato bene pippo"
    
 
 def main():
@@ -29,7 +30,7 @@ def main():
                    base_weapon((0,1), K_s),
                    base_weapon((0,-1), K_a),
                    base_weapon((-1,0), K_w)))
-#    b.add_weapon((triple_directed_weapon((1,0))))
+    b.add_weapon((triple_directed_weapon((1,0), K_z)))
     for _ in range(30):
         en = enemy_box([random.randint(1,255),
                         random.randint(1,255),
