@@ -10,13 +10,13 @@ try:
     import random
     import math
     from killdashape_k import *
-    from elements import *
+    import elements
     from global_vars import *
     from sound_master import *
+    from game_master import *
 except:
-    print "cazzo non ha importato bene pippo"
+    print "cazzo non ha importato bene"
    
-
 def main():
     pygame.init()    
     END = False
@@ -24,20 +24,11 @@ def main():
     screen = pygame.display.set_mode(K_WINDOW_DIM)
     pygame.display.set_caption("killdashape")
     background = pygame.Surface(K_WINDOW_DIM)
-    b = player_box([255, 0, 0], 
+    b = elements.player_box([255, 0, 0], 
                    [0, 0])
-    b.add_weapons((base_weapon((1,0), K_d),
-                   base_weapon((0,1), K_s),
-                   base_weapon((0,-1), K_a),
-                   base_weapon((-1,0), K_w)))
-    b.add_weapon((triple_directed_weapon((1,0), K_z)))
-    for _ in range(30):
-        en = enemy_box([random.randint(1,255),
-                        random.randint(1,255),
-                        random.randint(1,255)],                       
-                       [random.randint(30,640 - K_BOX_DIMENSION[0]),
-                        random.randint(30,320 - K_BOX_DIMENSION[1])])
-        enemies.add(en)
+    game_m.add_player(b)
+    game_m.set_triple_weapon()
+    game_m.add_enemy()
     
     while not END:
         clock.tick(45)
@@ -50,15 +41,21 @@ def main():
         bullets.update()
         enemies.update()
         junkie.update()
+        en_bullets.update()
         if pygame.sprite.spritecollide(b, enemies, 0) != []:
             b.die()
             END = True
+        if pygame.sprite.spritecollide(b, en_bullets, 0) != []:
+            b.die()
+            END = True
+        pygame.sprite.groupcollide(bullets, en_bullets, 0, 1)
         pygame.sprite.groupcollide(bullets, enemies, 1, 1)
         screen.blit(background, [0,0])
         screen.blit(b.image, b.rect)
         rectlist = bullets.draw(screen)
         rectlist += enemies.draw(screen)
         rectlist += junkie.draw(screen)
+        rectlist += en_bullets.draw(screen)
         pygame.display.update(rectlist)
         pygame.display.update()
 

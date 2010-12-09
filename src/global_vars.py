@@ -10,6 +10,7 @@ except:
     print "cazzo non ha importato bene"
     
 enemies = pygame.sprite.RenderUpdates()
+en_bullets = pygame.sprite.RenderUpdates()
 bullets = pygame.sprite.RenderUpdates()
 junkie = pygame.sprite.RenderUpdates()
 active_weapons = []

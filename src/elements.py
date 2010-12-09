@@ -12,6 +12,7 @@ try:
     from global_vars import *
     from useful_lib import *
     from sound_master import *
+    from game_master import *
 except:
     print "cazzo non ha importato bene pappa"
 
@@ -40,7 +41,7 @@ class bullet(pygame.sprite.Sprite):
     def kill(self):
         bullets.remove(self)
         self = None
-            
+
 class box(pygame.sprite.Sprite):
     """Superclasse di personaggio e nemico"""
     def __init__(self, color, initial_pos):
@@ -55,6 +56,7 @@ class enemy_box(box):
     def __init__(self, color, initial_pos):
         box.__init__(self, color, initial_pos)
         self.color = color
+        self.cooldown = K_COOLDOWN * 10 + random.randint(1, 25)
         enemies.add(self)
     
     def update(self, event=None, rest=None):
@@ -68,22 +70,30 @@ class enemy_box(box):
                 self.rect = self.rect.move(K_ENEMY_MOV, 0)
             else:
                 self.rect = self.rect.move(-K_ENEMY_MOV, 0)
-#    
+        if not self.cooldown:
+            self.cooldown = K_COOLDOWN * 20 + random.randint(30, 200)
+            x = bullet( (255,255,255),
+                        (self.rect.left, self.rect.centery),
+                        (-1,0))
+            en_bullets.add(x)
+        else:
+            self.cooldown -= 1
+    
     def kill(self):
         snd_master.play('enemy_explosion')
         enemies.remove(self)
+        #game_m.is_dead(self.__class__.__name__)
         for vector in ((1,0), (1,1), (0,1), (-1,1), (-1,0), (-1,-1), (0,-1), (1, -1)):
                 e = enemy_junkie(self.color, self.rect.center, vector)
                 junkie.add(e)
         self = None
-        
+
 class player_box(box):
     """L'utente"""
     def __init__(self, color, initial_pos):
         box.__init__(self, color, initial_pos)
         self.direction = [False for _ in range(4)]
         self.weapons = []
-
     
     def give(self, event=None, rest=None):
         if event.type == KEYDOWN:
@@ -159,7 +169,7 @@ class enemy_junkie(pygame.sprite.Sprite):
     def kill(self):
         junkie.remove(self)
         self = None
-           
+    
 class base_weapon(pygame.sprite.Sprite):
     """Arma basilare che spara un proiettile alla volta in una direzione"""
     def __init__(self, d_vector, firing_key=K_LCTRL, father=None):
@@ -192,7 +202,7 @@ class base_weapon(pygame.sprite.Sprite):
         
     def set_father(self, father):
         self.father = father
-                
+        
 class triple_directed_weapon(pygame.sprite.Sprite):
     """Arma che spara tre proiettili alla volta, in una sola direzione"""
     def __init__(self, direction, firing_key=K_LCTRL, father=None):
