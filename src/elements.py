@@ -109,6 +109,8 @@ class sinusoidal_enemy(enemy_box):
         self.degree += 5
         self.degree = self.degree % 360
         self.rect = self.rect.move(-K_ENEMY_MOV, 2 * K_ENEMY_MOV * math.sin(math.radians(self.degree)))
+        if self.rect.bottom >= K_WINDOW_DIM[1] or self.rect.top <= 0:
+            self.degree = (self.degree + 180) % 360
         if self.rect.right < -10:
             self.silent_die()
         if not self.cooldown:
