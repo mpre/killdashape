@@ -6,6 +6,8 @@ Created on 08/dic/2010
 
 try:
     import math
+    from global_vars import *
+    import elements
 except:
     print "cazzo non ha importato bene"
 
@@ -16,3 +18,12 @@ def angle(v1, v2):
     dotproduct = (v1[0] * v2[0]) + (v1[1] * v2[1]) # prodotto scalare
     
     return math.acos(dotproduct / (v1_length * v2_length))
+
+def create_explosion_at(color, rect):
+    for vector in ((1,0), (1,1), (0,1), (-1,1), 
+                   (-1,0), (-1,-1), (0,-1), (1,-1),
+                   (2,1), (2,-1), (0.5,1), (0.5,-1),
+                   (-2,1), (-2,-1), (-0.5,1), (-0.5,-1)
+                   ):
+                e = elements.enemy_junkie(color, rect.center, vector)
+                junkie.add(e)
