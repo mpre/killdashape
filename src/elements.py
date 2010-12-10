@@ -308,12 +308,22 @@ class fan_weapon(base_weapon):
                         (random.randint(1,255)),
                         (random.randint(1,255))),
                         (self.father.rect.center),
-                         (1,1))
+                         (3,1), 0.5)
             x = bullet(((random.randint(1,255)),
                         (random.randint(1,255)),
                         (random.randint(1,255))),
                         (self.father.rect.center),
-                         (1,-1)) 
+                         (2,1), 0.7)
+            x = bullet(((random.randint(1,255)),
+                        (random.randint(1,255)),
+                        (random.randint(1,255))),
+                        (self.father.rect.center),
+                         (3,-1), 0.5) 
+            x = bullet(((random.randint(1,255)),
+                        (random.randint(1,255)),
+                        (random.randint(1,255))),
+                        (self.father.rect.center),
+                         (2,-1), 0.7)
             snd_master.play('shoot')           
             bullets.add(x)
         else:
