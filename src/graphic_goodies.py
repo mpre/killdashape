@@ -64,6 +64,19 @@ class HUD_level(HUD_el):
         self.image = self.font.render('LEVEL: {0}'.format(game_m.get_level()),
                                       True, self.color)
         
+class HUD_ammo(HUD_el):
+    
+    def __init__(self):
+        HUD_el.__init__(self)
+        self.image = self.font.render('AMMO: {0}'.format(game_m.get_ammo()),
+                                      True, self.color)
+        self.rect = self.image.get_rect()
+        self.rect.bottomleft = (10, K_WINDOW_DIM[1]-3)
+        
+    def update(self):
+        self.image = self.font.render('AMMO: {0}'.format(game_m.get_ammo()),
+                                      True, self.color)
+        
 class HUD_pause(HUD_el):
     
     def __init__(self):
@@ -79,7 +92,7 @@ class HUD_pause(HUD_el):
                                           True, self.color)
         else:
             g_goodies.remove(self)
-
+            
 class HUD_msg(HUD_el):
     def __init__(self, msg):
         self.phase = 4

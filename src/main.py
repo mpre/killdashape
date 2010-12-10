@@ -12,12 +12,13 @@ try:
     from pygame.locals import *
     import random
     import math
+    import useful_lib
     from killdashape_k import *
     import elements
     from global_vars import *
     from sound_master import *
     from game_master import *
-    import useful_lib
+    import goodies
 except:
     print "cazzo non ha importato bene"
    
@@ -33,6 +34,7 @@ def main():
         rectlist += junkie.draw(screen)
         rectlist += en_bullets.draw(screen)
         rectlist += g_goodies.draw(screen)
+        rectlist += gds.draw(screen)
             
         pygame.display.update(rectlist)
         pygame.display.update()
@@ -72,6 +74,7 @@ def main():
             en_bullets.update()
             g_goodies.update()
             back_elements.update()
+            gds.update()
             
             en_collided = pygame.sprite.spritecollide(b, enemies, 0)
             if en_collided != []:
@@ -91,7 +94,7 @@ def main():
                     died = True
                     END = True
             
-          
+            pygame.sprite.spritecollide(b, gds, 1)
                    
             pygame.sprite.groupcollide(bullets, en_bullets, 0, 1)
             pygame.sprite.groupcollide(bullets, enemies, 1, 1)

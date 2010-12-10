@@ -12,7 +12,8 @@ try:
     from global_vars import *
     from useful_lib import *
     from sound_master import *
-    from game_master import *
+    import game_master
+    from global_vars import *
 except:
     print "cazzo non ha importato bene pappa"
 
@@ -79,7 +80,7 @@ class player_box(box):
     def __init__(self, color, initial_pos):
         box.__init__(self, color, initial_pos)
         self.direction = [False for _ in range(4)]
-        self.weapons = []
+        self.weapons = pygame.sprite.GroupSingle()
         self.color = color
         self.hp = K_HP
     
@@ -123,8 +124,7 @@ class player_box(box):
         if self.direction[M_EAST]:
             if not self.rect.right >= K_WINDOW_DIM[0] - K_MOV:
                 self.rect = self.rect.move(K_MOV, 0)
-        if active_weapons:
-            active_weapons[0].update()              
+        self.weapons.update()             
         
     def kill(self):
         self.hp -= 1
@@ -141,13 +141,16 @@ class player_box(box):
             
     def add_weapon(self, weapon):
         weapon.set_father(self)
-        self.weapons.append(weapon)
+        self.weapons.add(weapon)
         
     def clear_weapons(self):
-        self.weapons = []
-        
+        self.weapons = pygame.sprite.GroupSingle()
+            
     def hit_point(self):
         return self.hp
+    
+    def ammo(self):
+        return self.weapons.sprite.get_ammo()
         
 class enemy_junkie(pygame.sprite.Sprite):
     """Gli scarti generati dalla morte dei nemici"""

@@ -8,6 +8,7 @@ try:
     import weapons_l
     import enemies_l
     import pygame
+    import goodies
     import graphic_goodies
     from pygame.locals import *
     import random
@@ -38,19 +39,19 @@ class game_master(object):
         
     def set_base_weapon(self):
         self.player.clear_weapons()
-        self.player.add_weapons((weapons_l.base_weapon((1,0), K_d)))
+        self.player.add_weapons((weapons_l.base_weapon((1,0))))
         
     def set_triple_weapon(self):
         self.player.clear_weapons()
-        self.player.add_weapon(weapons_l.triple_directed_weapon((1,0), K_d))
+        self.player.add_weapon(weapons_l.triple_directed_weapon((1,0)))
     
     def set_fan_weapon(self):
         self.player.clear_weapons()
-        self.player.add_weapon(weapons_l.fan_weapon((1,0), K_d))
+        self.player.add_weapon(weapons_l.fan_weapon((1,0)))
         
     def set_h_weapon(self):
         self.player.clear_weapons()
-        self.player.add_weapon(weapons_l.h_weapon((1,0), K_d))
+        self.player.add_weapon(weapons_l.h_weapon((1,0)))
     
     def set_beam_weapon(self):
         self.player.clear_weapons()
@@ -105,10 +106,11 @@ class game_master(object):
         if math.sqrt(self.points/100) > self.level:
             self.level +=1
             if self.level == 5:
+                goodies.triple_w_goodie()
                 graphic_goodies.HUD_msg("WOW")
                 snd_master.play('wow')
             
-        graphic_goodies.background_star()
+        #graphic_goodies.background_star()
         
     def rollstate(self):
         return random.choice(self.possible_states)
@@ -122,6 +124,12 @@ class game_master(object):
         else:
             return 0
         
+    def get_ammo(self):
+        if self.player:
+            return self.player.ammo()
+        else:
+            return 0
+                
     def is_paused(self):
         return self.paused
     

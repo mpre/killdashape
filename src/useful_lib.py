@@ -34,19 +34,11 @@ def create_explosion_at(color, rect):
                 e = elements.enemy_junkie(color, rect.center, vector)
                 junkie.add(e)
                 
-def blitstats(screen):
-    point_font = pygame.font.Font(None, 20)
-    point_i = point_font.render('{0} : {1}'.format('Points',game_m.get_points()), 
-                                     True, K_FONT_COLOR)
-    point_r = point_i.get_rect()
-    point_r.topleft = (10, 3)
-    screen.blit(point_i, point_r)
-    return screen
-
 def init_stats():
     graphic_goodies.HUD_point()
     graphic_goodies.HUD_hp()
     graphic_goodies.HUD_level()
+    graphic_goodies.HUD_ammo()
     
 def init_pause():
     graphic_goodies.HUD_pause()

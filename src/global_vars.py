@@ -15,4 +15,5 @@ bullets = pygame.sprite.RenderUpdates()
 junkie = pygame.sprite.RenderUpdates()
 g_goodies = pygame.sprite.RenderUpdates()
 back_elements = pygame.sprite.RenderUpdates()
+gds = pygame.sprite.RenderUpdates()
 active_weapons = []
