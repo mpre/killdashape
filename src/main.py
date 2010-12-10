@@ -27,7 +27,8 @@ def main():
         screen.blit(background, [0,0])
         if not died:
             screen.blit(b.image, b.rect)
-        rectlist = bullets.draw(screen)
+        rectlist = back_elements.draw(screen)
+        rectlist += bullets.draw(screen)
         rectlist += enemies.draw(screen)
         rectlist += junkie.draw(screen)
         rectlist += en_bullets.draw(screen)
@@ -51,7 +52,7 @@ def main():
     useful_lib.init_stats()
     
     game_m.add_player(b)
-    game_m.set_fan_weapon()
+    game_m.set_beam_weapon()
     #game_m.add_enemy()
     
     while not END:
@@ -70,6 +71,7 @@ def main():
             junkie.update()
             en_bullets.update()
             g_goodies.update()
+            back_elements.update()
             
             en_collided = pygame.sprite.spritecollide(b, enemies, 0)
             if en_collided != []:

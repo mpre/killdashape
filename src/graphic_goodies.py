@@ -6,6 +6,7 @@ Created on 10/dic/2010
 
 try:
     import pygame
+    import random
     from pygame.locals import *
     from killdashape_k import *
     from global_vars import *
@@ -17,7 +18,9 @@ class HUD_el(pygame.sprite.Sprite):
     
     def __init__(self, font_dim=20, font_color=K_FONT_COLOR, font=None):
         pygame.sprite.Sprite.__init__(self)
-        self.font = pygame.font.Font(font, font_dim)
+        self.font_type = font
+        self.font_dim = font_dim
+        self.font = pygame.font.Font(self.font_type, self.font_dim)
         self.color = font_color
         g_goodies.add(self)
         
@@ -77,5 +80,90 @@ class HUD_pause(HUD_el):
         else:
             g_goodies.remove(self)
 
+class HUD_msg(HUD_el):
+    def __init__(self, msg):
+        self.phase = 4
+        self.max_dim = 50
+        HUD_el.__init__(self, int(0.4*self.max_dim), (200,0,0))
+        self.msg = msg
+        self.image = self.font.render(self.msg,
+                                      True, self.color)
+        self.rect = self.image.get_rect()
+        self.rect.center = K_WINDOW_DIM[0]/2, K_WINDOW_DIM[1]
+        self.i = 2.0 * K_TICK
+        self.colors = ((210,0,0),
+                       (0,210,0),
+                       (0,0,210),
+                       )
+        
+    def update(self):
+        if 0.05 <= (self.i / (self.phase*K_TICK)) < 0.1:
+            self.font_dim = 0.4 * self.max_dim
+        elif 0.1 <= (self.i / (self.phase*K_TICK)) < 0.15:
+            self.font_dim = 0.50 * self.max_dim
+        elif 0.15 <= (self.i / (self.phase*K_TICK)) < 0.20:
+            self.font_dim = 0.60 * self.max_dim
+        elif 0.20 <= (self.i / (self.phase*K_TICK)) < 0.25:
+            self.font_dim = 0.70 * self.max_dim
+        elif 0.25 <= (self.i / (self.phase*K_TICK)) < 0.30:
+            self.font_dim = 0.60 * self.max_dim
+        elif 0.30 <= (self.i / (self.phase*K_TICK)) < 0.35:
+            self.font_dim = 0.50 * self.max_dim
+        elif 0.35 <= (self.i / (self.phase*K_TICK)) < 0.45:
+            self.font_dim = 0.40 * self.max_dim
+        elif 0.45 <= (self.i / (self.phase*K_TICK)) < 0.50:
+            self.font_dim = 0.30 * self.max_dim
+        elif 0.55 <= (self.i / (self.phase*K_TICK)) < 0.6:
+            self.font_dim = 0.40 * self.max_dim
+        elif 0.6 <= (self.i / (self.phase*K_TICK)) < 0.65:
+            self.font_dim = 0.50 * self.max_dim
+        elif 0.65 <= (self.i / (self.phase*K_TICK)) < 0.70:
+            self.font_dim = 0.60 * self.max_dim
+        elif 0.70 <= (self.i / (self.phase*K_TICK)) < 0.75:
+            self.font_dim = 0.70 * self.max_dim
+        elif 0.75 <= (self.i / (self.phase*K_TICK)) < 0.80:
+            self.font_dim = 0.60 * self.max_dim
+        elif 0.80 <= (self.i / (self.phase*K_TICK)) < 0.85:
+            self.font_dim = 0.50 * self.max_dim
+        elif 0.85 <= (self.i / (self.phase*K_TICK)) < 0.95:
+            self.font_dim = 0.40 * self.max_dim
+        elif 0.95 <= (self.i / (self.phase*K_TICK)) < 1:
+            self.font_dim = 0.30 * self.max_dim
+        
+        if not self.i % 20:
+            self.color = random.choice(self.colors)
+        self.font = pygame.font.Font(self.font_type, int(self.font_dim))     
+        self.image = self.font.render(self.msg,
+                                      True, self.color)
+        self.rect = self.image.get_rect()
+        self.rect.centerx = K_WINDOW_DIM[0]/2
+        self.rect.bottom = K_WINDOW_DIM[1]
+                
+        self.i += 1
+        
+        if self.i > self.phase *K_TICK:
+            self.kill()
+            
+    def kill(self):
+        g_goodies.remove(self)
+        self = None
+    
 
-
+class background_star(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.Surface((3,3))
+        self.image.fill((139, 137, 137))
+        self.rect = self.image.get_rect()
+        self.rect.centery = random.randint(1, K_WINDOW_DIM[1]-50)
+        self.rect.centerx = K_WINDOW_DIM[0]
+        back_elements.add(self)
+        
+    def update(self):
+        if self.rect.centerx + 3:
+            self.rect.centerx -= 1 + 1 * (self.rect.centery / 20)
+        else:
+            self.kill()
+    
+    def kill(self):
+        back_elements.remove(self)

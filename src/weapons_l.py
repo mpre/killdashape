@@ -138,3 +138,17 @@ class h_weapon(base_weapon):
             bullets.add(x)
         else:
             self.cooldown -= 1
+            
+class beam_wall_weapon(base_weapon):
+    def update(self):
+        if not self.cooldown:
+            self.cooldown = K_COOLDOWN * 10
+            x = elements.v_bullet(((random.randint(1,255)),
+                                 (random.randint(1,255)),
+                                 (random.randint(1,255))),
+                                 (self.father.rect.topright),
+                                 self.direction)
+            snd_master.play('beam')
+            bullets.add(x)
+        else:
+            self.cooldown -= 1

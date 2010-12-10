@@ -5,12 +5,12 @@ Created on 08/dic/2010
 '''
 
 try:
+    import graphic_goodies
     import math
     from global_vars import *
     import elements
     from killdashape_k import *
     from game_master import *
-    import graphic_goodies
 except:
     print "cazzo non ha importato bene"
 

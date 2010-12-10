@@ -8,6 +8,7 @@ try:
     import weapons_l
     import enemies_l
     import pygame
+    import graphic_goodies
     from pygame.locals import *
     import random
     import math
@@ -49,8 +50,12 @@ class game_master(object):
         
     def set_h_weapon(self):
         self.player.clear_weapons()
-        self.player.add_weapon(weapons_l.h_weapon((1,0), K_d))    
+        self.player.add_weapon(weapons_l.h_weapon((1,0), K_d))
     
+    def set_beam_weapon(self):
+        self.player.clear_weapons()
+        self.player.add_weapon(weapons_l.beam_wall_weapon((1,0)))
+        
     def add_enemy(self):
         for _ in range(5):
             en = enemies_l.enemy_box([random.randint(30,255),
@@ -99,7 +104,12 @@ class game_master(object):
             
         if math.sqrt(self.points/100) > self.level:
             self.level +=1
+            if self.level == 5:
+                graphic_goodies.HUD_msg("WOW")
+                snd_master.play('wow')
             
+        graphic_goodies.background_star()
+        
     def rollstate(self):
         return random.choice(self.possible_states)
     
@@ -119,6 +129,5 @@ class game_master(object):
         self.paused = not self.paused
         if self.paused:
             useful_lib.init_pause()
-            
-    
+                
 game_m = game_master()

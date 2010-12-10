@@ -45,6 +45,25 @@ class bullet(pygame.sprite.Sprite):
         else:
             en_bullets.remove(self)
         self = None
+        
+class v_bullet(bullet):
+    """Vertical bullet, non distruttibile"""
+    def __init__(self, color, initial_pos, vector, speed=1):
+        bullet.__init__(self, color, initial_pos, vector, speed, (7,K_WINDOW_DIM[1]/2))
+        
+    def update(self):
+        offset_x = self.vector[0] * K_BULLET_SPEED * self.speed
+        self.rect = self.rect.move(offset_x, 0)
+        if self.rect[0] > K_WINDOW_DIM[0] or self.rect[0] < 0:
+            self.kill()
+        
+    def kill(self):
+        if self.rect[0] > K_WINDOW_DIM[0] or self.rect[0] < 0:
+            if self in bullets:
+                bullets.remove(self)
+            else:
+                en_bullets.remove(self)
+            self = None
 
 class box(pygame.sprite.Sprite):
     """Superclasse di personaggio e nemico"""
