@@ -7,6 +7,8 @@ Created on 08/dic/2010
 try:
     import graphic_goodies
     import math
+    import random
+    import goodies
     from global_vars import *
     import elements
     from killdashape_k import *
@@ -42,3 +44,11 @@ def init_stats():
     
 def init_pause():
     graphic_goodies.HUD_pause()
+    
+def casual_goodie():
+    # Sceglie un goodie casuale
+    g = random.choice(goodies.f_names)
+    eval('goodies.'+g+'()')
+    
+    
+    

@@ -13,6 +13,10 @@ try:
 except:
     print 'Errore in goodies'
 
+f_names = ['triple_w_goodie',
+           'beam_goodie',
+           'fan_goodie']
+
 class goodie(pygame.sprite.Sprite):
     
     def __init__(self):

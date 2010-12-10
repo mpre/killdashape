@@ -29,7 +29,7 @@ class game_master(object):
         self.cooldown = 0
         self.sintimes = 70
         self.pass_times = 50
-        self.possible_states = ('5SIN', 'BEGIN')
+        self.possible_states = ('5SIN', 'BEGIN', 'HORDE')
         self.state = 'BEGIN'
         self.level = K_LEVEL
         self.paused = False
@@ -62,7 +62,10 @@ class game_master(object):
                     self.wait_in_state = 0
                     self.to_pos_y = 0
                     self.state = 'BEGIN'
-                    self.cooldown = 7 * K_COOLDOWN             
+                    self.cooldown = 7 * K_COOLDOWN 
+            elif self.state == 'HORDE':
+                # Invia un'orda di nemici!!
+                self.state = 'BEGIN'            
             else:
                 # Nessuno stato ?
                 self.state = 'BEGIN'
@@ -70,6 +73,12 @@ class game_master(object):
             self.cooldown -= 1
             if self.cooldown == 0:
                 self.state = 'BEGIN'
+                
+        if math.sqrt(self.points/100) > self.level:
+            self.level += 1
+        
+        if random.randint(1,100) == 42:
+            useful_lib.casual_goodie()
                     
     def rollstate(self):
         return random.choice(self.possible_states)

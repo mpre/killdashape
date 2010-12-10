@@ -20,7 +20,7 @@ class enemy_box(elements.box):
     def __init__(self, color, initial_pos):
         elements.box.__init__(self, color, initial_pos)
         self.color = color
-        self.cooldown = K_COOLDOWN * 10 + random.randint(1, 25)
+        self.cooldown = K_COOLDOWN + random.randint(1, 25)
         enemies.add(self)
     
     def update(self, event=None, rest=None):
@@ -75,15 +75,34 @@ class sinusoidal_enemy(enemy_box):
             self.silent_die()
         if not self.cooldown:
             if random.randint(1,10) <= 6:
-                self.cooldown = K_COOLDOWN * 5 + random.randint(30, 200)
                 x = elements.bullet( (255,255,255),
                                      (self.rect.left, self.rect.centery),
                                      (-1,0),
                                      0.5)
                 en_bullets.add(x)
-            self.cooldown = K_COOLDOWN * 20 + random.randint(30, 200)
+            self.cooldown = int(K_COOLDOWN/math.log(game_m.get_level()+1)) + random.randint(1, 10)
         else:
             self.cooldown -= 1
             
             
-            
+class fw_enemy(enemy_box):
+    def __init__(self, color, initial_pos):
+        enemy_box.__init__(self, color, initial_pos)
+        self.rect.right = K_WINDOW_DIM[0] - 3
+        self.t = 1
+    
+    def update(self, event=None, rest=None):
+        self.rect = self.rect.move(-K_ENEMY_MOV * math.log(self.t))
+        if self.rect.right < -10:
+            self.silent_die()
+        if not self.cooldown:
+            if random.randint(1,10) <= 6:
+                x = elements.bullet( (255,255,255),
+                                     (self.rect.left, self.rect.centery),
+                                     (-1,0),
+                                     4)
+                en_bullets.add(x)
+            self.cooldown = K_COOLDOWN * float(20)/math.log(game_m.get_level()+1) + random.randint(1, 10)
+        else:
+            self.cooldown -= 1
+        return
