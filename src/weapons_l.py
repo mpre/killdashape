@@ -67,9 +67,14 @@ class base_weapon(pygame.sprite.Sprite):
 class triple_directed_weapon(base_weapon):
     """Arma che spara tre proiettili alla volta, in una sola direzione"""
                 
+    def __init__(self, d_vector, firing_key=K_d, bullet_speed=1, active=False, father=None):
+        base_weapon.__init__(self, d_vector, firing_key, bullet_speed, active, father)
+        self.ammo = 30
+    
     def update(self):
         if not self.cooldown:
             if self.active:
+                self.ammo -= 1
                 self.cooldown = K_COOLDOWN
                 x = elements.bullet(((random.randint(1,255)),
                                      (random.randint(1,255)),
@@ -88,6 +93,9 @@ class triple_directed_weapon(base_weapon):
                              self.direction) 
                 snd_master.play('shoot')
                 bullets.add(x)
+                if not self.ammo:
+                    game_master.game_m.set_base_weapon()
+                    self.kill()
         else:
             self.cooldown -= 1
         

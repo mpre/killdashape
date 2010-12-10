@@ -74,7 +74,7 @@ class sinusoidal_enemy(enemy_box):
         if self.rect.right < -10:
             self.silent_die()
         if not self.cooldown:
-            if random.randint(1,10) <= 3:
+            if random.randint(1,10) <= 6:
                 self.cooldown = K_COOLDOWN * 5 + random.randint(30, 200)
                 x = elements.bullet( (255,255,255),
                                      (self.rect.left, self.rect.centery),

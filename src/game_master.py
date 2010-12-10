@@ -106,12 +106,17 @@ class game_master(object):
         if math.sqrt(self.points/100) > self.level:
             self.level +=1
             if self.level == 5:
-                goodies.triple_w_goodie()
                 graphic_goodies.HUD_msg("WOW")
                 snd_master.play('wow')
-            
-        #graphic_goodies.background_star()
-        
+        if random.randint(1,400) == 1:
+            x = random.randint(1,3)
+            if x == 1:
+                goodies.beam_goodie()
+            elif x == 2:
+                goodies.fan_goodie()
+            elif x == 3:
+                goodies.triple_w_goodie()
+                    
     def rollstate(self):
         return random.choice(self.possible_states)
     

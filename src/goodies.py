@@ -17,7 +17,7 @@ class goodie(pygame.sprite.Sprite):
     
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.cooldown = K_GOODIE_COOLDOWN * 100
+        self.cooldown = K_GOODIE_COOLDOWN
         gds.add(self)
         
     def update(self):
@@ -30,7 +30,7 @@ class goodie(pygame.sprite.Sprite):
         
 class triple_w_goodie(goodie):
     
-    def __init__(self, letter='TriB'):
+    def __init__(self, letter='Triple!'):
         goodie.__init__(self)
         self.image = pygame.font.Font(None, 15).render(letter, True, (0,0,250), (255,255,255))
         self.rect = self.image.get_rect()
@@ -39,4 +39,30 @@ class triple_w_goodie(goodie):
         
     def kill(self):
         game_master.game_m.set_triple_weapon()
+        self.die()
+
+class beam_goodie(goodie):
+    
+    def __init__(self, letter='Beam!'):
+        goodie.__init__(self)
+        self.image = pygame.font.Font(None, 15).render(letter, True, (0,0,250), (0,255,255))
+        self.rect = self.image.get_rect()
+        self.rect.center = ((random.randint(100, K_WINDOW_DIM[0]),
+                            random.randint(0, K_WINDOW_DIM[1])))
+        
+    def kill(self):
+        game_master.game_m.set_beam_weapon()
+        self.die()
+
+class fan_goodie(goodie):
+    
+    def __init__(self, letter='Fan!!'):
+        goodie.__init__(self)
+        self.image = pygame.font.Font(None, 15).render(letter, True, (0,0,250), (255,255,0))
+        self.rect = self.image.get_rect()
+        self.rect.center = ((random.randint(100, K_WINDOW_DIM[0]),
+                            random.randint(0, K_WINDOW_DIM[1])))
+        
+    def kill(self):
+        game_master.game_m.set_fan_weapon()
         self.die()
