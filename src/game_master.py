@@ -29,10 +29,50 @@ class game_master(object):
         self.cooldown = 0
         self.sintimes = 70
         self.pass_times = 50
-        self.possible_states = ('5SIN', 'PASS')
-        self.state = '5SIN'
+        self.possible_states = ('5SIN', 'BEGIN')
+        self.state = 'BEGIN'
         self.level = K_LEVEL
         self.paused = False
+        self.to_pos_y = 0
+        self.wait_in_state = 0
+        self.enemy_placed = 0
+    
+    def act(self):
+        print self.state
+        if not self.cooldown:
+            if self.state == 'BEGIN':
+                self.state = random.choice((self.possible_states))
+            elif self.state == '5SIN':
+                if not self.wait_in_state:
+                    self.wait_in_state = 10 # Numero di clock tick da attendere
+                    if not self.to_pos_y:
+                        self.to_pos_y = random.randint(1, K_WINDOW_DIM[1]-60)
+                    en = enemies_l.sinusoidal_enemy(
+                                                    (random.randint(1,255),
+                                                     random.randint(1,255),
+                                                     random.randint(1,255)),
+                                                     (K_WINDOW_DIM[0], self.to_pos_y)
+                                                     )
+                    enemies.add(en)
+                    self.enemy_placed += 1
+                else:
+                    self.wait_in_state -= 1
+                if self.enemy_placed >= 5:
+                    self.enemy_placed = 0
+                    self.wait_in_state = 0
+                    self.to_pos_y = 0
+                    self.state = 'BEGIN'
+                    self.cooldown = 7 * K_COOLDOWN             
+            else:
+                # Nessuno stato ?
+                self.state = 'BEGIN'
+        else:
+            self.cooldown -= 1
+            if self.cooldown == 0:
+                self.state = 'BEGIN'
+                    
+    def rollstate(self):
+        return random.choice(self.possible_states)
     
     def add_player(self, player):
         self.player = player
@@ -65,60 +105,6 @@ class game_master(object):
                                      [random.randint(200,K_WINDOW_DIM[0] - K_BOX_DIMENSION[0]),
                                       random.randint(0,K_WINDOW_DIM[1] - K_BOX_DIMENSION[1])])
         enemies.add(en)
-        
-    def is_dead(self, name):
-        if name == 'enemy_box':
-            self.points += K_ENEMY_BOX_PT
-        elif name == 'sinusoidal_enemy':
-            self.points += K_ENEMY_SIN
-            
-    def get_points(self):
-        return self.points
-    
-    def act(self):
-        if not self.cooldown:
-            if self.state == '5SIN':
-                # Inserisco nemici sinusoidali
-                if self.sintimes % 5 == 0:
-                    en = enemies_l.sinusoidal_enemy([random.randint(1,255),
-                                                     random.randint(1,255),
-                                                     random.randint(1,255)],                       
-                                                     [random.randint(200,K_WINDOW_DIM[0] - K_BOX_DIMENSION[0]),
-                                                      random.randint(10, K_WINDOW_DIM[1] - 10)])
-                    enemies.add(en)
-                self.sintimes -= 1
-                if not self.sintimes:
-                    self.cooldown = K_COOLDOWN * 30 / self.level
-                    self.sintimes = 150
-                    self.state = 'PASS'
-                
-            elif self.state == 'PASS':
-                # Fa niente
-                if not self.pass_times:
-                    self.state = self.rollstate()
-                    self.pass_times = K_COOLDOWN * 30 / self.level
-                else:
-                    self.pass_times -=1
-                pass
-        else:
-            self.cooldown -= 1
-            
-        if math.sqrt(self.points/100) > self.level:
-            self.level +=1
-            if self.level == 5:
-                graphic_goodies.HUD_msg("WOW")
-                snd_master.play('wow')
-        if random.randint(1,400) == 1:
-            x = random.randint(1,3)
-            if x == 1:
-                goodies.beam_goodie()
-            elif x == 2:
-                goodies.fan_goodie()
-            elif x == 3:
-                goodies.triple_w_goodie()
-                    
-    def rollstate(self):
-        return random.choice(self.possible_states)
     
     def get_level(self):
         return self.level
@@ -128,6 +114,15 @@ class game_master(object):
             return self.player.hit_point()
         else:
             return 0
+        
+    def is_dead(self, name):
+        if name == 'enemy_box':
+            self.points += K_ENEMY_BOX_PT
+        elif name == 'sinusoidal_enemy':
+            self.points += K_ENEMY_SIN
+            
+    def get_points(self):
+        return self.points
         
     def get_ammo(self):
         if self.player:

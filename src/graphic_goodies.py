@@ -81,14 +81,14 @@ class HUD_pause(HUD_el):
     
     def __init__(self):
         HUD_el.__init__(self)
-        self.image = self.font.render('PAUSED',
+        self.image = self.font.render('PAUSED - Press ESC to exit',
                                       True, self.color)
         self.rect = self.image.get_rect()
         self.rect.center = (K_WINDOW_DIM[0]/2, K_WINDOW_DIM[1]/2)
         
     def update(self):
         if game_m.is_paused():
-            self.image = self.font.render('PAUSED'.format(game_m.get_level()),
+            self.image = self.font.render('PAUSED - Press ESC to exit'.format(game_m.get_level()),
                                           True, self.color)
         else:
             g_goodies.remove(self)
