@@ -63,7 +63,7 @@ def main():
             for e in pygame.event.get():
                 if e.type == QUIT:
                     END = True
-                elif e.type == KEYDOWN and e.key == K_SPACE:
+                elif e.type == KEYDOWN and e.key in M_PAUSE:
                     game_m.pause()
                 else:
                     b.give(e)
@@ -116,9 +116,9 @@ def main():
             for e in pygame.event.get():
                 if e.type == QUIT:
                     END = True
-                elif e.type == KEYDOWN and e.key == K_ESCAPE:
+                elif e.type == KEYDOWN and e.key in M_EXIT:
                     END = True
-                elif e.type == KEYDOWN and e.key == K_SPACE:
+                elif e.type == KEYDOWN and e.key in M_PAUSE:
                     game_m.pause()
             g_goodies.update()
             print_things()

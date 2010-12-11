@@ -86,26 +86,26 @@ class player_box(box):
     
     def give(self, event=None, rest=None):
         if event.type == KEYDOWN:
-            if event.key == K_DOWN:
+            if event.key in M_DOWN:
                 self.direction[M_SOUTH] = True
-            elif event.key == K_UP:
+            elif event.key in M_UP:
                 self.direction[M_NORTH] = True
-            elif event.key == K_LEFT:
+            elif event.key in M_LEFT:
                 self.direction[M_WEST] = True
-            elif event.key == K_RIGHT:
+            elif event.key in M_RIGHT:
                 self.direction[M_EAST] = True
             else:
                 for weapon in self.weapons:
                     weapon.give(event)
                 
         elif event.type == KEYUP:
-            if event.key == K_DOWN:
+            if event.key in M_DOWN:
                 self.direction[M_SOUTH] = False
-            elif event.key == K_UP:
+            elif event.key in M_UP:
                 self.direction[M_NORTH] = False
-            elif event.key == K_LEFT:
+            elif event.key in M_LEFT:
                 self.direction[M_WEST] = False
-            elif event.key == K_RIGHT:
+            elif event.key in M_RIGHT:
                 self.direction[M_EAST] = False
             else:
                 for weapon in self.weapons:

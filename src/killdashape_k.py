@@ -3,6 +3,8 @@ Created on 08/dic/2010
 
 @author: tosh
 '''
+from pygame.locals import *
+
 # Costanti
 M_NORTH = 0
 M_WEST = 1
@@ -24,7 +26,7 @@ K_JUNK_DIMENSION = (3,3)
 K_WINDOW_DIM = (640,320)
 K_HP = 3
 K_FONT_COLOR = (200,200,250)
-K_LEVEL = 400
+K_LEVEL = 5
 
 
 # NUMERO STANDARD DI COLPI
@@ -37,3 +39,12 @@ K_ENEMY_BOX_PT = 100
 K_ENEMY_SIN = 150
 
 SND_PATH = "../snd/"
+
+# GRUPPI TASTI
+M_DOWN = [K_DOWN]
+M_UP = [K_UP]
+M_RIGHT = [K_RIGHT]
+M_LEFT = [K_LEFT]
+M_WEAPON_SHOOT = [K_d]
+M_PAUSE = [K_SPACE]
+M_EXIT = [K_ESCAPE]

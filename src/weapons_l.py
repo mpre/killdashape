@@ -20,7 +20,7 @@ except:
 
 class base_weapon(pygame.sprite.Sprite):
     """Arma basilare che spara un proiettile alla volta in una direzione"""
-    def __init__(self, d_vector, firing_key=K_d, bullet_speed=1, active=False, father=None):
+    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, active=False, father=None):
         pygame.sprite.Sprite.__init__(self)
         self.cooldown = 0
         self.key = firing_key
@@ -31,10 +31,10 @@ class base_weapon(pygame.sprite.Sprite):
         
     def give(self, event, *rest):
         if event.type == KEYDOWN:
-            if event.key == self.key:
+            if event.key in self.key:
                 self.active = True
         elif event.type == KEYUP:
-            if event.key == self.key:
+            if event.key in self.key:
                 self.active = False
                 self.cooldown = 0
                 
@@ -67,7 +67,7 @@ class base_weapon(pygame.sprite.Sprite):
 class triple_directed_weapon(base_weapon):
     """Arma che spara tre proiettili alla volta, in una sola direzione"""
                 
-    def __init__(self, d_vector, firing_key=K_d, bullet_speed=1, active=False, father=None):
+    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, active=False, father=None):
         base_weapon.__init__(self, d_vector, firing_key, bullet_speed, active, father)
         self.ammo = K_TRIPLE_AMMO
     
@@ -100,7 +100,7 @@ class triple_directed_weapon(base_weapon):
             self.cooldown -= 1
         
 class fan_weapon(base_weapon):
-    def __init__(self, d_vector, firing_key=K_d, bullet_speed=1, active=False, father=None):
+    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, active=False, father=None):
         base_weapon.__init__(self, d_vector, firing_key, bullet_speed, active, father)
         self.ammo = K_FAN_AMMO
     
@@ -171,7 +171,7 @@ class h_weapon(base_weapon):
             
 class beam_wall_weapon(base_weapon):
     
-    def __init__(self, d_vector, firing_key=K_d, bullet_speed=1, father=None):
+    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, father=None):
         base_weapon.__init__(self, d_vector, firing_key, bullet_speed, father)
         self.ammo = K_BEAM_AMMO        
     
