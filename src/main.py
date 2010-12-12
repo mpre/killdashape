@@ -32,7 +32,8 @@ def main():
             init_back_rect.right = K_WINDOW_DIM[0]
         screen.blit(background, [init_back_rect.left,0])
         screen.blit(background, [init_back_rect.right,0])
-        rectlist = landscape.draw(screen)
+        rectlist = lndscp_back.draw(screen)
+        rectlist +=lndscp_front.draw(screen)
         rectlist += g_goodies.draw(screen)
         rectlist += back_elements.draw(screen)
         rectlist += player.draw(screen)
@@ -78,7 +79,8 @@ def main():
                     game_m.pause()
                 else:
                     b.give(e)
-            landscape.update()
+            lndscp_back.update()
+            lndscp_front.update()
             b.update()
             bullets.update()
             enemies.update()
@@ -106,7 +108,7 @@ def main():
                     died = True
                     END = True
             
-            land_collided = pygame.sprite.spritecollide(b, landscape, 0)
+            land_collided = pygame.sprite.spritecollide(b, lndscp_back, 0)
             if land_collided != []:
                 for element in land_collided:
                     if element.hurts() and b:
@@ -129,7 +131,8 @@ def main():
                 for _ in range(30):
                     clock.tick(K_TICK)
                     bullets.update()
-                    landscape.update()
+                    lndscp_back.update()
+                    lndscp_front.update()
                     enemies.update()
                     junkie.update()
                     en_bullets.update()
@@ -143,8 +146,7 @@ def main():
                     END = True
                 elif e.type == KEYDOWN and e.key in M_PAUSE:
                     game_m.pause()
-            g_goodies.update()
-            print_things()
+            g_goodies.update() # Per stampare 'pausa'
         
     
 

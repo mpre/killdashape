@@ -23,8 +23,8 @@ except:
 
 class game_master(object):
     
-    def __init__(self, player=None):
-        self.player = player
+    def __init__(self, player=[]):
+        self.players = player
         self.points = 0
         self.cooldown = 0
         self.sintimes = 70
@@ -87,27 +87,27 @@ class game_master(object):
         return random.choice(self.possible_states)
     
     def add_player(self, player):
-        self.player = player
+        self.players += [player]
         
-    def set_base_weapon(self):
-        self.player.clear_weapons()
-        self.player.add_weapons((weapons_l.base_weapon((1,0))))
+    def set_base_weapon(self, player=0):
+        self.players[player].clear_weapons()
+        self.players[player].add_weapons((weapons_l.base_weapon((1,0))))
         
-    def set_triple_weapon(self):
-        self.player.clear_weapons()
-        self.player.add_weapon(weapons_l.triple_directed_weapon((1,0)))
+    def set_triple_weapon(self, player=0):
+        self.players[player].clear_weapons()
+        self.players[player].add_weapon(weapons_l.triple_directed_weapon((1,0)))
     
-    def set_fan_weapon(self):
-        self.player.clear_weapons()
-        self.player.add_weapon(weapons_l.fan_weapon((1,0)))
+    def set_fan_weapon(self, player=0):
+        self.players[player].clear_weapons()
+        self.players[player].add_weapon(weapons_l.fan_weapon((1,0)))
         
-    def set_h_weapon(self):
-        self.player.clear_weapons()
-        self.player.add_weapon(weapons_l.h_weapon((1,0)))
+    def set_h_weapon(self, player=0):
+        self.players[player].clear_weapons()
+        self.players[player].add_weapon(weapons_l.h_weapon((1,0)))
     
-    def set_beam_weapon(self):
-        self.player.clear_weapons()
-        self.player.add_weapon(weapons_l.beam_wall_weapon((1,0)))
+    def set_beam_weapon(self, player=0):
+        self.players[player].clear_weapons()
+        self.players[player].add_weapon(weapons_l.beam_wall_weapon((1,0)))
         
     def add_enemy(self):
         for _ in range(5):
@@ -121,9 +121,12 @@ class game_master(object):
     def get_level(self):
         return self.level
     
-    def get_hp(self):
-        if self.player:
-            return self.player.hit_point()
+    def get_hp(self, player=0):
+        if self.players:
+            if self.players[player]:
+                return self.players[player].hit_point()
+            else:
+                return 0
         else:
             return 0
         
@@ -136,15 +139,18 @@ class game_master(object):
     def get_points(self):
         return self.points
         
-    def get_ammo(self):
-        if self.player:
-            return self.player.ammo()
+    def get_ammo(self, player=0):
+        if self.players:
+            if self.players[player]:
+                return self.players[player].ammo()
+            else:
+                return 0
         else:
             return 0
         
-    def get_weapon(self):
-        if self.player:
-            return self.player.get_weapon()
+    def get_weapon(self, player=0):
+        if self.players[player]:
+            return self.players[player].get_weapon()
         else:
             return 'None?!'
                 
@@ -155,5 +161,7 @@ class game_master(object):
         self.paused = not self.paused
         if self.paused:
             useful_lib.init_pause()
+        else:
+            snd_master.pause_loop()
                 
 game_m = game_master()

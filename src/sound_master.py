@@ -22,10 +22,18 @@ class sound_m(pygame.sprite.Sprite):
         self.snd['shoot'] = pygame.mixer.Sound(SND_PATH + "shoot-1.wav")
         self.snd['beam'] = pygame.mixer.Sound(SND_PATH + "beam.wav")
         self.snd['wow'] = pygame.mixer.Sound(SND_PATH + "wow.wav")
-        pygame.mixer.Sound(SND_PATH + "game_loop4.aif").play(-1)
+        self.snd['base_loop'] = pygame.mixer.Sound(SND_PATH + "game_loop4.aif")
+        self.snd['base_loop'].play(-1)
+        self.paused = False
         
     def play(self, sound):
         self.snd[sound].play()
-           
-     
+    
+    def pause_loop(self):
+        if self.paused:
+            self.snd['base_loop'].play(-1)
+        else:    
+            self.snd['base_loop'].stop()
+        self.paused = not self.paused
+        
 snd_master = sound_m()

@@ -77,40 +77,47 @@ class box(pygame.sprite.Sprite):
 
 class player_box(box):
     """L'utente"""
-    def __init__(self, color, initial_pos):
+    def __init__(self, color, initial_pos, nplayer=1):
         box.__init__(self, color, initial_pos)
         self.direction = [False for _ in range(4)]
         self.weapons = pygame.sprite.GroupSingle()
         self.color = color
         self.hp = K_HP
-        graphic_goodies.baloon(('1P', '1P'), self, 10, FONT_PATH + "bitlow.ttf", (255,255,255), (0,0,0), False)
+        self.nplayer = nplayer - 1 #player_number
+        self.baloon = graphic_goodies.baloon((str(nplayer)+'P', str(nplayer)+'P'), 
+                                             self, 10, FONT_PATH + "bitlow.ttf", 
+                                             (255,255,255), (0,0,0), False)
     
     def give(self, event=None, rest=None):
         if event.type == KEYDOWN:
-            if event.key in M_DOWN:
+            if event.key in M_DOWN[self.nplayer]:
                 self.direction[M_SOUTH] = True
-            elif event.key in M_UP:
+            elif event.key in M_UP[self.nplayer]:
                 self.direction[M_NORTH] = True
-            elif event.key in M_LEFT:
+            elif event.key in M_LEFT[self.nplayer]:
                 self.direction[M_WEST] = True
-            elif event.key in M_RIGHT:
+            elif event.key in M_RIGHT[self.nplayer]:
                 self.direction[M_EAST] = True
-            else:
+            elif event.key in M_WEAPON_SHOOT[self.nplayer]:
                 for weapon in self.weapons:
                     weapon.give(event)
+            else:
+                print 'unrecognized:'+str(event)
                 
         elif event.type == KEYUP:
-            if event.key in M_DOWN:
+            if event.key in M_DOWN[self.nplayer]:
                 self.direction[M_SOUTH] = False
-            elif event.key in M_UP:
+            elif event.key in M_UP[self.nplayer]:
                 self.direction[M_NORTH] = False
-            elif event.key in M_LEFT:
+            elif event.key in M_LEFT[self.nplayer]:
                 self.direction[M_WEST] = False
-            elif event.key in M_RIGHT:
+            elif event.key in M_RIGHT[self.nplayer]:
                 self.direction[M_EAST] = False
-            else:
+            elif event.key in M_WEAPON_SHOOT[self.nplayer]:
                 for weapon in self.weapons:
                     weapon.give(event)
+            else:
+                print 'unrecognized:'+str(event)
                 
     def update(self):
         if self.direction[M_SOUTH]:
@@ -132,6 +139,7 @@ class player_box(box):
         snd_master.play('enemy_explosion')
         if self.hp == 0:
             create_explosion_at(self.color, self.rect)
+            g_goodies.remove(self.baloon)
     
     def add_weapons(self, weapons=None):
         if weapons.__class__.__name__ == 'list':

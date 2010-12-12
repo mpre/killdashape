@@ -54,10 +54,17 @@ K_ENEMY_SIN = 150
 
 
 # GRUPPI TASTI
-M_DOWN = [K_DOWN]
-M_UP = [K_UP]
-M_RIGHT = [K_RIGHT]
-M_LEFT = [K_LEFT]
-M_WEAPON_SHOOT = [K_d]
+M_DOWN = [[],[]]
+M_UP = [[],[]]
+M_RIGHT = [[],[]]
+M_LEFT = [[],[]]
+M_WEAPON_SHOOT = [[],[]]
+
+# PLAYER 1
+M_DOWN[0] = [K_DOWN]
+M_UP[0] = [K_UP]
+M_RIGHT[0] = [K_RIGHT]
+M_LEFT[0] = [K_LEFT]
+M_WEAPON_SHOOT[0] = [K_d]
 M_PAUSE = [K_SPACE]
 M_EXIT = [K_ESCAPE]

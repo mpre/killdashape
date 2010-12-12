@@ -20,10 +20,11 @@ except:
 
 class base_weapon(pygame.sprite.Sprite):
     """Arma basilare che spara un proiettile alla volta in una direzione"""
-    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, active=False, father=None):
+    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, 
+                 active=False, father=None, nplayer=0):
         pygame.sprite.Sprite.__init__(self)
         self.cooldown = 0
-        self.key = firing_key
+        self.key = firing_key[nplayer]
         self.direction = d_vector
         self.father = father
         self.active = active
@@ -71,8 +72,9 @@ class base_weapon(pygame.sprite.Sprite):
 class triple_directed_weapon(base_weapon):
     """Arma che spara tre proiettili alla volta, in una sola direzione"""
                 
-    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, active=False, father=None):
-        base_weapon.__init__(self, d_vector, firing_key, bullet_speed, active, father)
+    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, 
+                 active=False, father=None, nplayer=0):
+        base_weapon.__init__(self, d_vector, firing_key, bullet_speed, active, father, nplayer)
         self.ammo = K_TRIPLE_AMMO
         self.name = 'Saddam rifle'
     
@@ -105,8 +107,9 @@ class triple_directed_weapon(base_weapon):
             self.cooldown -= 1
         
 class fan_weapon(base_weapon):
-    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, active=False, father=None):
-        base_weapon.__init__(self, d_vector, firing_key, bullet_speed, active, father)
+    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, 
+                 active=False, father=None, nplayer=0):
+        base_weapon.__init__(self, d_vector, firing_key, bullet_speed, active, father, nplayer)
         self.ammo = K_FAN_AMMO
         self.name = 'Color HELL!'
     
@@ -159,8 +162,9 @@ class fan_weapon(base_weapon):
             self.cooldown -= 1
 
 class h_weapon(base_weapon):
-    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, active=False, father=None):
-        base_weapon.__init__(self, d_vector, firing_key, bullet_speed, active, father)
+    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, 
+                 active=False, father=None, nplayer=0):
+        base_weapon.__init__(self, d_vector, firing_key, bullet_speed, active, father, nplayer)
         self.name = 'Slam Dunk!'
     
     def update(self):
@@ -181,8 +185,9 @@ class h_weapon(base_weapon):
             
 class beam_wall_weapon(base_weapon):
     
-    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, father=None):
-        base_weapon.__init__(self, d_vector, firing_key, bullet_speed, father)
+    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, 
+                 active=False, father=None, nplayer=0):
+        base_weapon.__init__(self, d_vector, firing_key, bullet_speed, father, nplayer)
         self.ammo = K_BEAM_AMMO  
         self.name = "Hell's hoover"      
     

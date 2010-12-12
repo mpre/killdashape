@@ -214,20 +214,25 @@ class baloon(HUD_el):
         self.rect.centerx = self.father.rect.centerx
         
 class en_baloon(baloon):
-    def __init__(self, msg_group, father, font_dim=15, font=K_FONT, font_color=(0,0,0), font_backgroud=(255,255,255)):
-        baloon.__init__(self, msg_group, father, font_dim, font, font_color, font_backgroud)
+    def __init__(self, msg_group, father, font_dim=15, 
+                 font=K_FONT, font_color=(0,0,0), font_backgroud=(255,255,255),
+                 alpha_background=True):
+        baloon.__init__(self, msg_group, father, font_dim, 
+                        font, font_color, font_backgroud, alpha_background)
         self.image.set_alpha(170)
         pass
         
 class cloud(pygame.sprite.Sprite):
-    def __init__(self, y_pos=random.randint(5,K_WINDOW_DIM[1]/3)):
+    def __init__(self, y_pos=None):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('../img/cloud.png').convert()
+        self.image = pygame.image.load(IMG_PATH + 'cloud.png').convert()
         self.image.set_colorkey((0,0,0))
         self.rect = self.image.get_rect()
+        if not y_pos:
+            y_pos=random.randint(5,K_WINDOW_DIM[1]/3)
         self.rect.centery = y_pos
         self.rect.left = K_WINDOW_DIM[0]
-        landscape.add(self)
+        lndscp_back.add(self)
         
     def update(self):
         self.rect.left -= 1
@@ -253,7 +258,7 @@ class floor(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.left = y_pos
         self.rect.bottom = K_WINDOW_DIM[1]
-        landscape.add(self)
+        lndscp_back.add(self)
         
     def update(self):
         pass
