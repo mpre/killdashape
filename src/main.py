@@ -63,7 +63,7 @@ def main():
     player.add(b)
     useful_lib.init_stats()
     useful_lib.init_landscape()
-    graphic_goodies.cloud()
+    
     game_m.add_player(b)
     game_m.set_fan_weapon()
     #game_m.add_enemy()
@@ -108,10 +108,12 @@ def main():
             
             land_collided = pygame.sprite.spritecollide(b, landscape, 0)
             if land_collided != []:
-                b.kill()
-                if b.hit_point() == 0:
-                    died = True
-                    END = True
+                for element in land_collided:
+                    if element.hurts() and b:
+                        b.kill()
+                        if b.hit_point() == 0:
+                            died = True
+                            END = True
             
             pygame.sprite.spritecollide(b, gds, 1)
                    
