@@ -83,7 +83,7 @@ class player_box(box):
         self.weapons = pygame.sprite.GroupSingle()
         self.color = color
         self.hp = K_HP
-        graphic_goodies.baloon(('1P', '1P'), self, 10, FONT_PATH + "bitlow.ttf", (255,255,255), (0,0,0))
+        graphic_goodies.baloon(('1P', '1P'), self, 10, FONT_PATH + "bitlow.ttf", (255,255,255), (0,0,0), False)
     
     def give(self, event=None, rest=None):
         if event.type == KEYDOWN:

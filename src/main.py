@@ -25,10 +25,13 @@ except:
 def main(): 
     
     def print_things():
-        screen.blit(background, [0,0])
-        if not died:
-            screen.blit(b.image, b.rect)
+        init_back_rect.right -= 3
+        if init_back_rect.right <= 0:
+            init_back_rect.right = K_WINDOW_DIM[0]
+        screen.blit(background, [init_back_rect.left,0])
+        screen.blit(background, [init_back_rect.right,0])
         rectlist = back_elements.draw(screen)
+        rectlist += player.draw(screen)
         rectlist += bullets.draw(screen)
         rectlist += enemies.draw(screen)
         rectlist += junkie.draw(screen)
@@ -37,20 +40,23 @@ def main():
         rectlist += gds.draw(screen)
             
         pygame.display.update(rectlist)
-        pygame.display.update()
+        #pygame.display.update()
         
     
     pygame.init()  
     END = False
     died = False
     
+    
     clock = pygame.time.Clock()
-    screen = pygame.display.set_mode(K_WINDOW_DIM)
+    screen = pygame.display.set_mode(K_WINDOW_DIM)#, pygame.FULLSCREEN)
     pygame.display.set_caption("killdashape")
-    background = pygame.Surface(K_WINDOW_DIM)
+    #background = pygame.Surface(K_WINDOW_DIM)
+    background = pygame.image.load('../img/background.png').convert()
+    init_back_rect = background.get_rect()
     b = elements.player_box([255, 0, 0], 
                             [K_BOX_DIMENSION[0]/2, K_WINDOW_DIM[1]/2])
-    
+    player.add(b)
     useful_lib.init_stats()
     
     game_m.add_player(b)
@@ -104,6 +110,7 @@ def main():
             game_m.act()
             
             if died:
+                player.remove(b)
                 for _ in range(30):
                     clock.tick(K_TICK)
                     bullets.update()

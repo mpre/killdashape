@@ -197,12 +197,16 @@ class background_star(pygame.sprite.Sprite):
 
 
 class baloon(HUD_el):
-    def __init__(self, msg_group, father, font_dim=10, font=K_BALOON_FONT, font_color=(0,0,0), font_backgroud=(255,255,255)):
+    def __init__(self, msg_group, father, font_dim=10, font=K_BALOON_FONT, font_color=(0,0,0), 
+                 font_backgroud=(255,255,255), alpha_background=True):
         HUD_el.__init__(self, font_dim, font_color, font)
         self.msg = random.choice(msg_group)
         self.father = father
         self.back_color = font_backgroud
-        self.image = self.font.render(self.msg, True, self.color, self.back_color)
+        if alpha_background:
+            self.image = self.font.render(self.msg, True, self.color, self.back_color)
+        else:
+            self.image = self.font.render(self.msg, True, self.color)
         self.rect = self.image.get_rect()
         
     def update(self):
