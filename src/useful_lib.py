@@ -43,6 +43,12 @@ def init_stats():
     graphic_goodies.HUD_ammo()
     #graphic_goodies.HUD_gun()
     
+def init_landscape():
+    y_pos = 0
+    while y_pos < K_WINDOW_DIM[0]:
+        graphic_goodies.floor(y_pos)
+        y_pos += 8
+    
 def init_pause():
     graphic_goodies.HUD_pause()
     

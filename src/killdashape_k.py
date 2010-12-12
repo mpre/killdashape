@@ -7,6 +7,7 @@ from pygame.locals import *
 
 FONT_PATH = "../font/"
 SND_PATH = "../snd/"
+IMG_PATH = "../img/"
 
 # FRASI DETTE DAI NEMICI
 K_EN_SENTENCES = ("YOUR MOM IS A TRIANGLE!", "I WANNA KILL U", 

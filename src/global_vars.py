@@ -17,4 +17,5 @@ g_goodies = pygame.sprite.RenderUpdates()
 back_elements = pygame.sprite.RenderUpdates()
 gds = pygame.sprite.RenderUpdates()
 player = pygame.sprite.RenderUpdates()
+landscape = pygame.sprite.RenderUpdates()
 active_weapons = []

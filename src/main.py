@@ -32,13 +32,14 @@ def main():
             init_back_rect.right = K_WINDOW_DIM[0]
         screen.blit(background, [init_back_rect.left,0])
         screen.blit(background, [init_back_rect.right,0])
-        rectlist = back_elements.draw(screen)
+        rectlist = landscape.draw(screen)
+        rectlist += g_goodies.draw(screen)
+        rectlist += back_elements.draw(screen)
         rectlist += player.draw(screen)
         rectlist += bullets.draw(screen)
         rectlist += enemies.draw(screen)
         rectlist += junkie.draw(screen)
         rectlist += en_bullets.draw(screen)
-        rectlist += g_goodies.draw(screen)
         rectlist += gds.draw(screen)
             
         pygame.display.update(rectlist)
@@ -61,7 +62,8 @@ def main():
                             [K_BOX_DIMENSION[0]/2, K_WINDOW_DIM[1]/2])
     player.add(b)
     useful_lib.init_stats()
-    
+    useful_lib.init_landscape()
+    graphic_goodies.cloud()
     game_m.add_player(b)
     game_m.set_fan_weapon()
     #game_m.add_enemy()
@@ -76,6 +78,7 @@ def main():
                     game_m.pause()
                 else:
                     b.give(e)
+            landscape.update()
             b.update()
             bullets.update()
             enemies.update()
@@ -103,6 +106,13 @@ def main():
                     died = True
                     END = True
             
+            land_collided = pygame.sprite.spritecollide(b, landscape, 0)
+            if land_collided != []:
+                b.kill()
+                if b.hit_point() == 0:
+                    died = True
+                    END = True
+            
             pygame.sprite.spritecollide(b, gds, 1)
                    
             pygame.sprite.groupcollide(bullets, en_bullets, 0, 1)
@@ -117,6 +127,7 @@ def main():
                 for _ in range(30):
                     clock.tick(K_TICK)
                     bullets.update()
+                    landscape.update()
                     enemies.update()
                     junkie.update()
                     en_bullets.update()

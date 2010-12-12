@@ -219,3 +219,45 @@ class en_baloon(baloon):
         self.image.set_alpha(170)
         pass
         
+class cloud(pygame.sprite.Sprite):
+    def __init__(self, y_pos=random.randint(5,K_WINDOW_DIM[1]/3)):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load('../img/cloud.png').convert()
+        self.image.set_colorkey((0,0,0))
+        self.rect = self.image.get_rect()
+        self.rect.centery = y_pos
+        self.rect.left = K_WINDOW_DIM[0]
+        landscape.add(self)
+        
+    def update(self):
+        self.rect.left -= 1
+        #self.rect.centery = self.rect.centery + random.randint(-1,1)
+        if self.rect.top < 0:
+            self.rect.move(0,1)
+        if self.rect.bottom > K_WINDOW_DIM[1]/3:
+            self.rect.move(0,-1)
+        if self.rect.right < 0:
+            self.kill()
+            
+    def kill(self):
+        g_goodies.remove(self)
+        self = None
+        
+    def hurts(self):
+        return False
+        
+class floor(pygame.sprite.Sprite):
+    def __init__(self, y_pos):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(IMG_PATH + 'floor.png').convert()
+        self.rect = self.image.get_rect()
+        self.rect.left = y_pos
+        self.rect.bottom = K_WINDOW_DIM[1]
+        landscape.add(self)
+        
+    def update(self):
+        pass
+        
+    def hurts(self):
+        return True
+        
