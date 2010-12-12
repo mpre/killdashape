@@ -19,6 +19,8 @@ try:
     from sound_master import *
     from game_master import *
     import goodies
+    import os
+    import platform
 except:
     print "cazzo non ha importato bene"
    
@@ -40,7 +42,8 @@ def main():
         rectlist += gds.draw(screen)
             
         pygame.display.update(rectlist)
-        #pygame.display.update()
+        if not platform.system() == 'Darwin':
+            pygame.display.update()
         
     
     pygame.init()  
