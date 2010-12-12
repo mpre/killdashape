@@ -22,8 +22,10 @@ class enemy_box(elements.box):
         self.color = color
         self.cooldown = K_COOLDOWN + random.randint(1, 25)
         enemies.add(self)
-        if random.randint(40,45) == 42:
-            self.baloon = graphic_goodies.en_baloon(K_EN_SENTENCES, self, 10, FONT_PATH + "bitlow.ttf", (255,255,255), (0,0,0))
+        if random.randint(40,50) == 42:
+            self.baloon = graphic_goodies.en_baloon(K_EN_SENTENCES, self, 10, 
+                                                    FONT_PATH + "bitrip.ttf", 
+                                                    (255,255,255), (70,70,70))
         else:
             self.baloon = None
     
