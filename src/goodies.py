@@ -36,7 +36,7 @@ class triple_w_goodie(goodie):
     
     def __init__(self, letter='Triple!'):
         goodie.__init__(self)
-        self.image = pygame.font.Font(None, 15).render(letter, True, (0,0,250), (255,255,255))
+        self.image = pygame.font.Font(K_FONT, 15).render(letter, True, (0,0,250), (255,255,255))
         self.rect = self.image.get_rect()
         self.rect.center = ((random.randint(100, K_WINDOW_DIM[0]),
                             random.randint(0, K_WINDOW_DIM[1])))
@@ -49,7 +49,7 @@ class beam_goodie(goodie):
     
     def __init__(self, letter='Beam!'):
         goodie.__init__(self)
-        self.image = pygame.font.Font(None, 15).render(letter, True, (0,0,250), (0,255,255))
+        self.image = pygame.font.Font(K_FONT, 15).render(letter, True, (0,0,250), (0,255,255))
         self.rect = self.image.get_rect()
         self.rect.center = ((random.randint(100, K_WINDOW_DIM[0]),
                             random.randint(0, K_WINDOW_DIM[1])))
@@ -62,7 +62,7 @@ class fan_goodie(goodie):
     
     def __init__(self, letter='Fan!!'):
         goodie.__init__(self)
-        self.image = pygame.font.Font(None, 15).render(letter, True, (0,0,250), (255,255,0))
+        self.image = pygame.font.Font(K_FONT, 15).render(letter, True, (0,0,250), (255,255,0))
         self.rect = self.image.get_rect()
         self.rect.center = ((random.randint(100, K_WINDOW_DIM[0]),
                             random.randint(0, K_WINDOW_DIM[1])))

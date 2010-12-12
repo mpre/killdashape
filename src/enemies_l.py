@@ -22,6 +22,10 @@ class enemy_box(elements.box):
         self.color = color
         self.cooldown = K_COOLDOWN + random.randint(1, 25)
         enemies.add(self)
+        if random.randint(40,45) == 42:
+            self.baloon = graphic_goodies.en_baloon(K_EN_SENTENCES, self, 10, FONT_PATH + "bitlow.ttf", (255,255,255), (0,0,0))
+        else:
+            self.baloon = None
     
     def update(self, event=None, rest=None):
         if random.randint(0,1):
@@ -56,6 +60,7 @@ class enemy_box(elements.box):
         
     def silent_die(self):
         enemies.remove(self)
+        g_goodies.remove(self.baloon)
         self = None
         
 class sinusoidal_enemy(enemy_box):

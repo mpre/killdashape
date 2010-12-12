@@ -16,7 +16,7 @@ except:
     
 class HUD_el(pygame.sprite.Sprite):
     
-    def __init__(self, font_dim=20, font_color=K_FONT_COLOR, font=None):
+    def __init__(self, font_dim=20, font_color=K_FONT_COLOR, font=K_FONT):
         pygame.sprite.Sprite.__init__(self)
         self.font_type = font
         self.font_dim = font_dim
@@ -180,3 +180,21 @@ class background_star(pygame.sprite.Sprite):
     
     def kill(self):
         back_elements.remove(self)
+
+
+class baloon(HUD_el):
+    def __init__(self, msg_group, father, font_dim=15, font=K_FONT, font_color=(0,0,0), font_backgroud=(255,255,255)):
+        HUD_el.__init__(self, font_dim, font_color, font)
+        self.msg = random.choice(msg_group)
+        self.father = father
+        self.back_color = font_backgroud
+        self.image = self.font.render(self.msg, True, self.color, self.back_color)
+        self.rect = self.image.get_rect()
+        
+    def update(self):
+        self.rect.bottom = self.father.rect.top - 5
+        self.rect.centerx = self.father.rect.centerx
+        
+class en_baloon(baloon):
+        pass
+        

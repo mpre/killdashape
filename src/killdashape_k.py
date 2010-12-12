@@ -5,6 +5,14 @@ Created on 08/dic/2010
 '''
 from pygame.locals import *
 
+FONT_PATH = "../font/"
+SND_PATH = "../snd/"
+
+# FRASI DETTE DAI NEMICI
+K_EN_SENTENCES = ("YOUR MOM IS A TRIANGLE!", "I WANNA KILL U", 
+                  "LET ME TOUCH YOU", "I LOVE ABBOT", "FLATLAND, MY LOVE",
+                  "PUTTING U DOWN", "MEH!?")
+
 # Costanti
 M_NORTH = 0
 M_WEST = 1
@@ -26,6 +34,7 @@ K_JUNK_DIMENSION = (3,3)
 K_WINDOW_DIM = (640,320)
 K_HP = 3
 K_FONT_COLOR = (200,200,250)
+K_FONT = None# FONT_PATH + "bitlow.ttf"
 K_LEVEL = 5
 
 
@@ -38,7 +47,6 @@ K_BEAM_AMMO = 3
 K_ENEMY_BOX_PT = 100
 K_ENEMY_SIN = 150
 
-SND_PATH = "../snd/"
 
 # GRUPPI TASTI
 M_DOWN = [K_DOWN]
@@ -48,3 +56,4 @@ M_LEFT = [K_LEFT]
 M_WEAPON_SHOOT = [K_d]
 M_PAUSE = [K_SPACE]
 M_EXIT = [K_ESCAPE]
+
