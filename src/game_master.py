@@ -79,6 +79,9 @@ class game_master(object):
         
         if random.randint(1,100) == 42:
             useful_lib.casual_goodie()
+            
+        if random.randint(1,200) == 42:
+            graphic_goodies.cloud()
                     
     def rollstate(self):
         return random.choice(self.possible_states)
