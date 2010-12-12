@@ -35,7 +35,10 @@ K_JUNK_DIMENSION = (3,3)
 K_WINDOW_DIM = (640,320)
 K_HP = 3
 K_FONT_COLOR = (200,200,250)
-K_FONT = None# FONT_PATH + "bitlow.ttf"
+K_FONT = FONT_PATH + "drid.ttf"
+K_GOODIE_FONT = None
+K_BALOON_FONT = FONT_PATH + "bitlow.ttf"
+K_GOODIE_FONT_DIM = 15
 K_LEVEL = 1
 
 
