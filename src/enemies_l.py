@@ -66,7 +66,7 @@ class sinusoidal_enemy(enemy_box):
         self.rect.right = K_WINDOW_DIM[0] - 3
         self.degree = 0
         self.amp = random.uniform(1,3)
-        if random.randint(40,42) == 42:
+        if random.randint(40,60) == 42:
             self.baloon = graphic_goodies.en_baloon(K_EN_SINUSOIDAL_SENT, self, 10, 
                                                     FONT_PATH + "bitrip.ttf", 
                                                     (255,255,255), (0,0,0))
