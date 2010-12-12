@@ -22,12 +22,6 @@ class enemy_box(elements.box):
         self.color = color
         self.cooldown = K_COOLDOWN + random.randint(1, 25)
         enemies.add(self)
-        if random.randint(40,50) == 42:
-            self.baloon = graphic_goodies.en_baloon(K_EN_SENTENCES, self, 10, 
-                                                    FONT_PATH + "bitrip.ttf", 
-                                                    (255,255,255), (70,70,70))
-        else:
-            self.baloon = None
     
     def update(self, event=None, rest=None):
         if random.randint(0,1):
@@ -72,6 +66,12 @@ class sinusoidal_enemy(enemy_box):
         self.rect.right = K_WINDOW_DIM[0] - 3
         self.degree = 0
         self.amp = random.uniform(1,3)
+        if random.randint(40,42) == 42:
+            self.baloon = graphic_goodies.en_baloon(K_EN_SINUSOIDAL_SENT, self, 10, 
+                                                    FONT_PATH + "bitrip.ttf", 
+                                                    (255,255,255), (0,0,0))
+        else:
+            self.baloon = None
     
     def update(self, event=None, rest=None):
         self.degree += 5

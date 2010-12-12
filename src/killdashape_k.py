@@ -12,6 +12,7 @@ SND_PATH = "../snd/"
 K_EN_SENTENCES = ("YOUR MOM IS A TRIANGLE!", "I WANNA KILL U", 
                   "LET ME TOUCH YOU", "I LOVE ABBOT", "FLATLAND, MY LOVE",
                   "PUTTING U DOWN", "MEH!?")
+K_EN_SINUSOIDAL_SENT = K_EN_SENTENCES + ("SIN > COS !!", "WE <3 SIN")
 
 # Costanti
 M_NORTH = 0
@@ -35,7 +36,7 @@ K_WINDOW_DIM = (640,320)
 K_HP = 3
 K_FONT_COLOR = (200,200,250)
 K_FONT = None# FONT_PATH + "bitlow.ttf"
-K_LEVEL = 5
+K_LEVEL = 1
 
 
 # NUMERO STANDARD DI COLPI

@@ -28,6 +28,7 @@ class base_weapon(pygame.sprite.Sprite):
         self.father = father
         self.active = active
         self.ammo = -1
+        self.name = 'James Bond from the HELL'
         
     def give(self, event, *rest):
         if event.type == KEYDOWN:
@@ -63,6 +64,9 @@ class base_weapon(pygame.sprite.Sprite):
             return str(self.ammo)
         else:
             return "Infinite"
+        
+    def get_name(self):
+        return self.name
                 
 class triple_directed_weapon(base_weapon):
     """Arma che spara tre proiettili alla volta, in una sola direzione"""
@@ -70,6 +74,7 @@ class triple_directed_weapon(base_weapon):
     def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, active=False, father=None):
         base_weapon.__init__(self, d_vector, firing_key, bullet_speed, active, father)
         self.ammo = K_TRIPLE_AMMO
+        self.name = 'Saddam rifle'
     
     def update(self):
         if not self.cooldown:
@@ -103,6 +108,7 @@ class fan_weapon(base_weapon):
     def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, active=False, father=None):
         base_weapon.__init__(self, d_vector, firing_key, bullet_speed, active, father)
         self.ammo = K_FAN_AMMO
+        self.name = 'Color HELL!'
     
     def update(self):
         if not self.cooldown:
@@ -113,7 +119,7 @@ class fan_weapon(base_weapon):
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.topright),
-                             self.direction) 
+                            (1,0.1)) 
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
@@ -123,27 +129,27 @@ class fan_weapon(base_weapon):
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.bottomright),
-                             self.direction) 
+                            (1,-0.1)) 
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.center),
-                             (3,1), 0.5)
+                             (1,0.2))
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.center),
-                             (2,1), 0.7)
+                             (1,0.5), 0.7)
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.center),
-                             (3,-1), 0.5) 
+                             (1,-0.2)) 
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.center),
-                             (2,-1), 0.7)
+                             (1,-0.5), 0.7)
                 snd_master.play('shoot')           
                 bullets.add(x)
                 if not self.ammo:
@@ -153,6 +159,10 @@ class fan_weapon(base_weapon):
             self.cooldown -= 1
 
 class h_weapon(base_weapon):
+    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, active=False, father=None):
+        base_weapon.__init__(self, d_vector, firing_key, bullet_speed, active, father)
+        self.name = 'Slam Dunk!'
+    
     def update(self):
         if not self.cooldown:
             if self.active:
@@ -173,7 +183,8 @@ class beam_wall_weapon(base_weapon):
     
     def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, father=None):
         base_weapon.__init__(self, d_vector, firing_key, bullet_speed, father)
-        self.ammo = K_BEAM_AMMO        
+        self.ammo = K_BEAM_AMMO  
+        self.name = "Hell's hoover"      
     
     def update(self):
         if not self.cooldown:

@@ -54,7 +54,7 @@ def main():
     useful_lib.init_stats()
     
     game_m.add_player(b)
-    game_m.set_beam_weapon()
+    game_m.set_fan_weapon()
     #game_m.add_enemy()
     
     while not END:

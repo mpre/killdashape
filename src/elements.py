@@ -152,6 +152,9 @@ class player_box(box):
     
     def ammo(self):
         return self.weapons.sprite.get_ammo()
+    
+    def get_weapon(self):
+        return self.weapons.sprite.get_name()
         
 class enemy_junkie(pygame.sprite.Sprite):
     """Gli scarti generati dalla morte dei nemici"""

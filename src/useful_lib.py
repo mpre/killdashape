@@ -41,6 +41,7 @@ def init_stats():
     graphic_goodies.HUD_hp()
     graphic_goodies.HUD_level()
     graphic_goodies.HUD_ammo()
+    #graphic_goodies.HUD_gun()
     
 def init_pause():
     graphic_goodies.HUD_pause()

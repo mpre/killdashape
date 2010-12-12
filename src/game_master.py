@@ -138,6 +138,12 @@ class game_master(object):
             return self.player.ammo()
         else:
             return 0
+        
+    def get_weapon(self):
+        if self.player:
+            return self.player.get_weapon()
+        else:
+            return 'None?!'
                 
     def is_paused(self):
         return self.paused

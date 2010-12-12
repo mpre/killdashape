@@ -48,8 +48,8 @@ class HUD_hp(HUD_el):
         
     def update(self):
         self.image = self.font.render('HP: {0}'.format(game_m.get_hp()),
-                                      True, self.color)
-        
+                                      True, self.color)   
+
 class HUD_level(HUD_el):
     
     def __init__(self):
@@ -75,6 +75,20 @@ class HUD_ammo(HUD_el):
         
     def update(self):
         self.image = self.font.render('AMMO: {0}'.format(game_m.get_ammo()),
+                                      True, self.color)
+        
+class HUD_gun(HUD_el):
+    
+    def __init__(self):
+        HUD_el.__init__(self)
+        self.image = self.font.render('WEAPON: {0}'.format(game_m.get_weapon()),
+                                      True, self.color)
+        self.rect = self.image.get_rect()
+        self.rect.bottom = K_WINDOW_DIM[1] - 3
+        self.rect.left = K_WINDOW_DIM[0]/2 + self.image.get_size()[1]/2
+        
+    def update(self):
+        self.image = self.font.render('WEAPON: {0}'.format(game_m.get_weapon()),
                                       True, self.color)
         
 class HUD_pause(HUD_el):
@@ -196,5 +210,8 @@ class baloon(HUD_el):
         self.rect.centerx = self.father.rect.centerx
         
 class en_baloon(baloon):
+    def __init__(self, msg_group, father, font_dim=15, font=K_FONT, font_color=(0,0,0), font_backgroud=(255,255,255)):
+        baloon.__init__(self, msg_group, father, font_dim, font, font_color, font_backgroud)
+        self.image.set_alpha(170)
         pass
         
