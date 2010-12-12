@@ -64,11 +64,13 @@ class sinusoidal_enemy(enemy_box):
         enemy_box.__init__(self, color, initial_pos)
         self.rect.right = K_WINDOW_DIM[0] - 3
         self.degree = 0
+        self.amp = random.uniform(1,3)
     
     def update(self, event=None, rest=None):
         self.degree += 5
         self.degree = self.degree % 360
-        self.rect = self.rect.move(-K_ENEMY_MOV, 2 * K_ENEMY_MOV * math.sin(math.radians(self.degree)))
+        self.rect = self.rect.move(-K_ENEMY_MOV, 
+                                   self.amp * K_ENEMY_MOV * math.sin(math.radians(self.degree)))
         if self.rect.bottom >= K_WINDOW_DIM[1] or self.rect.top <= 0:
             self.degree = (self.degree + 180) % 360
         if self.rect.right < -10:

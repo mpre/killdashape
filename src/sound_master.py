@@ -22,6 +22,7 @@ class sound_m(pygame.sprite.Sprite):
         self.snd['shoot'] = pygame.mixer.Sound(SND_PATH + "shoot-1.wav")
         self.snd['beam'] = pygame.mixer.Sound(SND_PATH + "beam.wav")
         self.snd['wow'] = pygame.mixer.Sound(SND_PATH + "wow.wav")
+        pygame.mixer.Sound(SND_PATH + "game_loop4.aif").play(-1)
         
     def play(self, sound):
         self.snd[sound].play()
