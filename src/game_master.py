@@ -36,6 +36,7 @@ class game_master(object):
         self.to_pos_y = 0
         self.wait_in_state = 0
         self.enemy_placed = 0
+        self.player_points = [0 for _ in range(4)]
     
     def act(self):
         print self.state
@@ -160,14 +161,29 @@ class game_master(object):
         else:
             return 0
         
-    def is_dead(self, name):
+    def is_dead(self, name, who):
         if name == 'enemy_box':
             self.points += K_ENEMY_BOX_PT
+            if who:
+                self.player_points[who.get_p_number()] += K_ENEMY_BOX_PT
         elif name == 'sinusoidal_enemy':
             self.points += K_ENEMY_SIN
+            if who:
+                self.player_points[who.get_p_number()] += K_ENEMY_SIN
+        elif name == 'fw_enemy':
+            self.points += K_ENEMY_FW_PT
+            if who:
+                self.player_points[who.get_p_number()] += K_ENEMY_FW_PT
+        elif name == 'follower_enemy':
+            self.points += K_ENEMY_FOLLOWER_PT
+            if who:
+                self.player_points[who.get_p_number()] += K_ENEMY_FOLLOWER_PT
             
     def get_points(self):
         return self.points
+    
+    def get_player_points(self):
+        return self.player_points
         
     def get_ammo(self, player=None):
         if player:

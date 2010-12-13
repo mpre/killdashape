@@ -48,9 +48,9 @@ class enemy_box(elements.box):
         else:
             self.cooldown -= 1
     
-    def kill(self):
+    def kill(self, who=None):
         snd_master.play('enemy_explosion')
-        game_m.is_dead(self.__class__.__name__)
+        game_m.is_dead(self.__class__.__name__, who)
         useful_lib.create_explosion_at(self.color, self.rect)
         self.silent_die()
         

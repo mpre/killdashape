@@ -19,7 +19,8 @@ except Exception, message:
 
 class bullet(pygame.sprite.Sprite):
     """Single bullet class"""
-    def __init__(self, color, initial_pos, vector, speed=1, bullet_dimension=K_BULLET_DIMENSION):
+    def __init__(self, color, initial_pos, vector, speed=1, 
+                 bullet_dimension=K_BULLET_DIMENSION, father=None):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface(bullet_dimension)
         # Ruoto l'immagine in modo che sia concorde
@@ -31,6 +32,7 @@ class bullet(pygame.sprite.Sprite):
         self.rect.center = initial_pos
         self.vector = vector
         self.speed = speed
+        self.father = father
         #bullets.add(self)
         
     def update(self):
@@ -46,11 +48,14 @@ class bullet(pygame.sprite.Sprite):
         else:
             en_bullets.remove(self)
         self = None
+    
+    def get_father(self):
+        return self.father
         
 class v_bullet(bullet):
     """Vertical bullet, non distruttibile"""
-    def __init__(self, color, initial_pos, vector, speed=1):
-        bullet.__init__(self, color, initial_pos, vector, speed, (7,K_WINDOW_DIM[1]/2))
+    def __init__(self, color, initial_pos, vector, speed=1, father=None):
+        bullet.__init__(self, color, initial_pos, vector, speed, (7,K_WINDOW_DIM[1]/2), father)
         
     def update(self):
         offset_x = self.vector[0] * K_BULLET_SPEED * self.speed

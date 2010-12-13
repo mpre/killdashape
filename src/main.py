@@ -153,7 +153,13 @@ def main():
                 
                    
             pygame.sprite.groupcollide(bullets, en_bullets, 0, 1)
-            pygame.sprite.groupcollide(bullets, enemies, 1, 1)
+            coll_dict = pygame.sprite.groupcollide(bullets, enemies, 0, 0)
+            for b in coll_dict:
+                for en in coll_dict[b]:
+                    en.kill(b.get_father())
+                b.kill()
+                #enemies.kill(b.get_father())
+                #b.kill()
             
 
             print_things()
@@ -170,7 +176,7 @@ def main():
                 elif e.type == KEYDOWN and e.key in M_PAUSE:
                     game_m.pause()
             g_goodies.update() # Per stampare 'pausa'
-         
+
     if not IMMEDIATE:   
         for _ in range(30):
                         clock.tick(K_TICK)
@@ -182,9 +188,45 @@ def main():
                         en_bullets.update()
                         g_goodies.update()
                         print_things()
-            
-    
+    bullets.empty()
+    enemies.empty()
+    junkie.empty()
+    en_bullets.empty()
+    g_goodies.empty()
+    gds.empty()
+    print_things()
+    print_score(screen)
 
+def print_score(screen):
+    scores = game_m.get_player_points()
+    font = pygame.font.Font(K_FONT, 15)
+    image = font.render('PLAYER SCORE',
+                        True, K_FONT_COLOR)
+    rect = image.get_rect()
+    rect.top = K_WINDOW_DIM[1]/3 - 50
+    rect.left = K_WINDOW_DIM[0]/2 - 80
+    screen.blit(image, rect)
+    
+    for i in range(4):
+        image = font.render('PLAYER {1}: {0}'.format(scores[i], i+1),
+                                          True, K_FONT_COLOR)
+        rect = image.get_rect()
+        rect.top = K_WINDOW_DIM[1]/3 + 30*i
+        rect.left = K_WINDOW_DIM[0]/2 - 80
+        screen.blit(image, rect)
+    end = False
+    image = font.render('TOTAL SCORE: {0}'.format(game_m.get_points()),
+                        True, K_FONT_COLOR)
+    rect = image.get_rect()
+    rect.top = K_WINDOW_DIM[1]/3 + 155
+    rect.left = K_WINDOW_DIM[0]/2 - 80
+    screen.blit(image, rect)
+    pygame.display.update()
+    while not end:
+        for e in pygame.event.get():
+            if e.type == KEYDOWN or e.type == QUIT:
+                end = True    
+    
 if __name__ == '__main__':
     main()
         

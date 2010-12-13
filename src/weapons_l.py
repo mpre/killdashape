@@ -48,7 +48,7 @@ class base_weapon(pygame.sprite.Sprite):
                                      (random.randint(1,255)),
                                      (random.randint(1,255))),
                                      (self.father.rect.center),
-                                     self.direction) 
+                                     self.direction, father=self.father) 
                 snd_master.play('shoot')
                 bullets.add(x)
         else:
@@ -90,19 +90,19 @@ class triple_directed_weapon(base_weapon):
                                      (random.randint(1,255)),
                                      (random.randint(1,255))),
                                      (self.father.rect.topright),
-                                     self.direction) 
+                                     self.direction, father=self.father) 
                 bullets.add(x)
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             ((self.father.rect.right, self.father.rect.centery)),
-                             self.direction) 
+                             self.direction, father=self.father) 
                 bullets.add(x)
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.bottomright),
-                             self.direction) 
+                             self.direction, father=self.father) 
                 bullets.add(x)
                 snd_master.play('shoot')
                 if not self.ammo:
@@ -127,43 +127,43 @@ class fan_weapon(base_weapon):
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.topright),
-                            (1,0.1))
+                            (1,0.1), father=self.father)
                 bullets.add(x) 
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             ((self.father.rect.right, self.father.rect.centery)),
-                             self.direction)
+                             self.direction,father=self.father)
                 bullets.add(x) 
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.bottomright),
-                            (1,-0.1))
+                            (1,-0.1), father=self.father)
                 bullets.add(x) 
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.center),
-                             (1,0.2))
+                             (1,0.2), father=self.father)
                 bullets.add(x)
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.center),
-                             (1,0.5), 0.7)
+                             (1,0.5), 0.7, father=self.father)
                 bullets.add(x)
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.center),
-                             (1,-0.2))
+                             (1,-0.2), father=self.father)
                 bullets.add(x) 
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.center),
-                             (1,-0.5), 0.7)
+                             (1,-0.5), 0.7, father=self.father)
                 snd_master.play('shoot')           
                 bullets.add(x)
                 if not self.ammo:
@@ -188,7 +188,7 @@ class h_weapon(base_weapon):
                             (self.father.rect.center),
                              self.direction,
                              0.5,
-                             (5,15)) 
+                             (5,15), father=self.father) 
                 snd_master.play('shoot')
                 bullets.add(x)
         else:
@@ -211,7 +211,7 @@ class beam_wall_weapon(base_weapon):
                                      (random.randint(1,255)),
                                      (random.randint(1,255))),
                                      (self.father.rect.topright),
-                                     self.direction)
+                                     self.direction, father=self.father)
                 snd_master.play('beam')
                 bullets.add(x)
                 if not self.ammo:
