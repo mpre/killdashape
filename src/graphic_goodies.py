@@ -222,10 +222,10 @@ class baloon(HUD_el):
 class en_baloon(baloon):
     def __init__(self, msg_group, father, font_dim=15, 
                  font=K_FONT, font_color=(0,0,0), font_backgroud=(255,255,255),
-                 alpha_background=True):
+                 alpha_background=False):
         baloon.__init__(self, msg_group, father, font_dim, 
                         font, font_color, font_backgroud, alpha_background)
-        self.image.set_alpha(170)
+        #self.image.set_alpha(170)
         pass
         
 class cloud(pygame.sprite.Sprite):

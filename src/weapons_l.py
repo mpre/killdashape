@@ -91,20 +91,22 @@ class triple_directed_weapon(base_weapon):
                                      (random.randint(1,255))),
                                      (self.father.rect.topright),
                                      self.direction) 
+                bullets.add(x)
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             ((self.father.rect.right, self.father.rect.centery)),
                              self.direction) 
+                bullets.add(x)
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.bottomright),
                              self.direction) 
-                snd_master.play('shoot')
                 bullets.add(x)
+                snd_master.play('shoot')
                 if not self.ammo:
-                    game_master.game_m.set_base_weapon(self.father.get_p_number())
+                    game_master.game_m.set_base_weapon(self.father)
                     self.kill()
         else:
             self.cooldown -= 1
@@ -125,32 +127,38 @@ class fan_weapon(base_weapon):
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.topright),
-                            (1,0.1)) 
+                            (1,0.1))
+                bullets.add(x) 
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             ((self.father.rect.right, self.father.rect.centery)),
-                             self.direction) 
+                             self.direction)
+                bullets.add(x) 
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.bottomright),
-                            (1,-0.1)) 
+                            (1,-0.1))
+                bullets.add(x) 
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.center),
                              (1,0.2))
+                bullets.add(x)
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.center),
                              (1,0.5), 0.7)
+                bullets.add(x)
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
                             (self.father.rect.center),
-                             (1,-0.2)) 
+                             (1,-0.2))
+                bullets.add(x) 
                 x = elements.bullet(((random.randint(1,255)),
                             (random.randint(1,255)),
                             (random.randint(1,255))),
@@ -207,7 +215,7 @@ class beam_wall_weapon(base_weapon):
                 snd_master.play('beam')
                 bullets.add(x)
                 if not self.ammo:
-                    game_master.game_m.set_base_weapon(self.father.get_p_number())
+                    game_master.game_m.set_base_weapon(self.father)
                     self.kill()
         else:
             self.cooldown -= 1

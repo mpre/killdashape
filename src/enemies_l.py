@@ -65,11 +65,11 @@ class sinusoidal_enemy(enemy_box):
         enemy_box.__init__(self, color, initial_pos)
         self.rect.right = K_WINDOW_DIM[0] - 3
         self.degree = 0
-        self.amp = random.uniform(1,3)
+        self.amp = random.uniform(1,7)
         if random.randint(40,55) == 42:
             self.baloon = graphic_goodies.en_baloon(K_EN_SINUSOIDAL_SENT, self, 10, 
                                                     FONT_PATH + "bitrip.ttf", 
-                                                    (255,255,255), (0,0,0), False)
+                                                    (255,255,255), (0,0,0), True)
         else:
             self.baloon = None
     
@@ -78,7 +78,7 @@ class sinusoidal_enemy(enemy_box):
         self.degree = self.degree % 360
         self.rect = self.rect.move(-K_ENEMY_MOV, 
                                    self.amp * math.sin(math.radians(self.degree)))
-        if self.rect.bottom >= K_WINDOW_DIM[1] or self.rect.top <= 0:
+        if self.rect.bottom >= K_WINDOW_DIM[1]-8 or self.rect.top <= 0:
             self.degree = (self.degree + 180) % 360
         if self.rect.right < -10:
             self.silent_die()
@@ -99,9 +99,16 @@ class fw_enemy(enemy_box):
         enemy_box.__init__(self, color, initial_pos)
         self.rect.right = K_WINDOW_DIM[0] - 3
         self.t = 1
+        if random.randint(40,50) == 42:
+            self.baloon = graphic_goodies.en_baloon(K_EN_FW_SENT, self, 10, 
+                                                    FONT_PATH + "bitrip.ttf", 
+                                                    (255,255,255), (0,0,0), True)
+        else:
+            self.baloon = None
     
     def update(self, event=None, rest=None):
-        self.rect = self.rect.move(-K_ENEMY_MOV * math.log(self.t))
+        self.t += 1
+        self.rect = self.rect.move(int(-K_ENEMY_MOV * math.log(self.t) * random.uniform(1,1.5)), 0)
         if self.rect.right < -10:
             self.silent_die()
         if not self.cooldown:
@@ -111,7 +118,65 @@ class fw_enemy(enemy_box):
                                      (-1,0),
                                      4)
                 en_bullets.add(x)
-            self.cooldown = K_COOLDOWN * float(20)/math.log(game_m.get_level()+1) + random.randint(1, 10)
+            self.cooldown = int(K_COOLDOWN * float(20)/math.log(game_m.get_level()+1)) + random.randint(1, 10)
         else:
             self.cooldown -= 1
         return
+    
+class follower_enemy(enemy_box):
+    def __init__(self, color, initial_pos, p=None):
+        enemy_box.__init__(self, color, initial_pos)
+        self.rect.right = K_WINDOW_DIM[0] - 3
+        if p:
+            self.objective = p.rect.centery
+        else:
+            self.objective = game_m.get_random_player().rect.centery
+        self.baloon = None
+        
+    def update(self):
+        if not self.objective:
+            # E' morto l'obiettivo
+            self.rect = self.rect.move(-K_ENEMY_MOV, 0)
+            if self.rect.right < -5:
+                self.kill()
+        if self.rect.centerx > K_WINDOW_DIM[0] - 60:
+            # Deve entrare nella finestra
+            self.rect = self.rect.move(-K_ENEMY_MOV, 0)
+        elif self.cooldown:
+            # Attende
+            self.cooldown -= 1
+        else:
+            # Si muove o spara
+            if self.rect.centery - 30 < self.objective < self.rect.centery + 30:
+                # Spara
+                bull = elements.v_bullet((253,253,0),
+                                         (self.rect.left, self.rect.centery),
+                                         (-1,0),
+                                         0.3)
+                en_bullets.add(bull)
+                self.cooldown = int(K_COOLDOWN * 15 / math.log(game_m.get_level()+1)) + random.randint(10, 200)
+                p = game_m.get_random_player()
+                if p:
+                    self.objective = p.rect.centery
+            else:
+                if self.rect.centery < self.objective:
+                    self.rect = self.rect.move(0, K_ENEMY_MOV)
+                else:
+                    self.rect = self.rect.move(0, -K_ENEMY_MOV)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        

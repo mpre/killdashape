@@ -29,7 +29,7 @@ class game_master(object):
         self.cooldown = 0
         self.sintimes = 70
         self.pass_times = 50
-        self.possible_states = ('5SIN', 'BEGIN', 'HORDE')
+        self.possible_states = ('5SIN', 'BEGIN', 'HORDE', 'LASER_GUY')
         self.state = 'BEGIN'
         self.level = K_LEVEL
         self.paused = False
@@ -65,7 +65,40 @@ class game_master(object):
                     self.cooldown = 7 * K_COOLDOWN 
             elif self.state == 'HORDE':
                 # Invia un'orda di nemici!!
-                self.state = 'BEGIN'            
+                if not self.wait_in_state:
+                    self.wait_in_state = 10
+                    en = enemies_l.fw_enemy(
+                                            (random.randint(1,255),
+                                             random.randint(1,255),
+                                             random.randint(1,255)),
+                                             (K_WINDOW_DIM[0], random.randint(1, K_WINDOW_DIM[1]-140))
+                                             )
+                    enemies.add(en)
+                    self.enemy_placed += 1
+                else:
+                    self.wait_in_state -= 1
+                if self.enemy_placed >= K_HORDE_SIZE:
+                    self.enemy_placed = 0
+                    self.wait_in_state = 0
+                    self.state = 'BEGIN'
+                    self.cooldown = 7 * K_COOLDOWN
+            elif self.state == 'LASER_GUY':
+                # Invia un'orda di nemici!!
+                if not self.wait_in_state:
+                    self.wait_in_state = 10
+                    en = enemies_l.follower_enemy(
+                                            (random.randint(1,255),
+                                             random.randint(1,255),
+                                             random.randint(1,255)),
+                                             (0, random.randint(1, K_WINDOW_DIM[1]-140))
+                                             )
+                    enemies.add(en)
+                else:
+                    self.wait_in_state -= 1
+                self.enemy_placed = 0
+                self.wait_in_state = 0
+                self.state = 'BEGIN'
+                self.cooldown = 7 * K_COOLDOWN           
             else:
                 # Nessuno stato ?
                 self.state = 'BEGIN'
@@ -158,10 +191,11 @@ class game_master(object):
         else:
             snd_master.pause_loop()
             
-    def two_players(self):
-        if len(player) > 1:
-            return True
+    def get_random_player(self):   
+        if len(self.players.sprites()) > 0:       
+            p = random.choice(self.players.sprites())
         else:
-            return False
+            p = None
+        return p
                 
 game_m = game_master()

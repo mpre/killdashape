@@ -31,7 +31,7 @@ class bullet(pygame.sprite.Sprite):
         self.rect.center = initial_pos
         self.vector = vector
         self.speed = speed
-        bullets.add(self)
+        #bullets.add(self)
         
     def update(self):
         offset_x = self.vector[0] * K_BULLET_SPEED * self.speed
@@ -86,7 +86,7 @@ class player_box(box):
         self.nplayer = nplayer - 1 #player_number
         self.baloon = graphic_goodies.baloon((str(nplayer)+'P', str(nplayer)+'P'), 
                                              self, 10, FONT_PATH + "bitlow.ttf", 
-                                             (255,255,255), (0,0,0), False)
+                                             (0,0,0), (255,255,255), False)
     
     def give(self, event=None, rest=None):
         done = True

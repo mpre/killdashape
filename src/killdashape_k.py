@@ -14,6 +14,7 @@ K_EN_SENTENCES = ("YOUR MOM IS A TRIANGLE!", "I WANNA KILL U",
                   "LET ME TOUCH YOU", "I LOVE ABBOT", "FLATLAND, MY LOVE",
                   "PUTTING U DOWN", "MEH!?")
 K_EN_SINUSOIDAL_SENT = K_EN_SENTENCES + ("SIN > COS !!", "WE <3 SIN")
+K_EN_FW_SENT = ('KAMIKAZEEEE!', 'ARIGATO!')
 
 # Costanti
 M_NORTH = 0
@@ -25,6 +26,7 @@ K_MOV = 5
 K_TICK = 30
 
 K_ENEMY_MOV = 4
+K_HORDE_SIZE = 5
 K_BULLET_SPEED = 15 # BULLET SPEED IN PIXEL
 K_COOLDOWN = 5
 K_GOODIE_COOLDOWN = 2 * K_TICK
@@ -55,27 +57,39 @@ K_ENEMY_SIN = 150
 
 K_PLAYER_COLOR = [(255,0,0),
                   (0,0,0),
-                  (0,255,200),
-                  (0,100,220)]
+                  (0,150,50),
+                  (200,100,30)]
 # GRUPPI TASTI
-M_DOWN = [[],[]]
-M_UP = [[],[]]
-M_RIGHT = [[],[]]
-M_LEFT = [[],[]]
-M_WEAPON_SHOOT = [[],[]]
+M_DOWN = [[],[],[],[]]
+M_UP = [[],[],[],[]]
+M_RIGHT = [[],[],[],[]]
+M_LEFT = [[],[],[],[]]
+M_WEAPON_SHOOT = [[],[],[],[]]
 
 # PLAYER 1
 M_DOWN[0] = [K_DOWN]
 M_UP[0] = [K_UP]
 M_RIGHT[0] = [K_RIGHT]
 M_LEFT[0] = [K_LEFT]
-M_WEAPON_SHOOT[0] = [K_m]
+M_WEAPON_SHOOT[0] = [K_RCTRL]
 # PLAYER 2
-M_DOWN[1] = [K_s]
-M_UP[1] = [K_w]
-M_RIGHT[1] = [K_d]
-M_LEFT[1] = [K_a]
-M_WEAPON_SHOOT[1] = [K_c]
+M_DOWN[1] = [K_m]
+M_UP[1] = [K_k]
+M_RIGHT[1] = [K_COMMA]
+M_LEFT[1] = [K_n]
+M_WEAPON_SHOOT[1] = [K_v]
+#PLAYER 3
+M_DOWN[2] = [K_KP6]
+M_UP[2] = [K_KP5]
+M_RIGHT[2] = [K_KP9]
+M_LEFT[2] = [K_KP3]
+M_WEAPON_SHOOT[2] = [K_KP_PERIOD]
+#PLAYER 3
+M_DOWN[3] = [K_a]
+M_UP[3] = [K_s]
+M_RIGHT[3] = [K_z]
+M_LEFT[3] = [K_q]
+M_WEAPON_SHOOT[3] = [K_LALT]
 
 M_PAUSE = [K_SPACE]
 M_EXIT = [K_ESCAPE]

@@ -51,7 +51,7 @@ def main():
     pygame.init()  
     END = False
     IMMEDIATE = False
-    n_player = 2
+    n_player = 1
     player_dead = [True for _ in range(4)]    
     
     clock = pygame.time.Clock()
@@ -64,7 +64,7 @@ def main():
     for i in range(n_player):
         player_dead[i] = False
         a = elements.player_box(K_PLAYER_COLOR[i], 
-                                [K_BOX_DIMENSION[0]/2, K_WINDOW_DIM[1]/2], i+1)
+                                [K_BOX_DIMENSION[0]/2, K_WINDOW_DIM[1]/2 + 15*((-1)**i)*(i+1)], i+1)
         player.add(a)
         game_m.add_player(a)
         game_m.set_fan_weapon(a)
