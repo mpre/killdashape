@@ -16,6 +16,8 @@ try:
 except:
     print "cazzo non ha importato bene"
 
+pl_goodies = []
+
 # -*- Funzioni di supporto -*-
 def angle(v1, v2):
     v1_length = math.sqrt(v1[0]**2 + v1[1]**2)
@@ -36,11 +38,12 @@ def create_explosion_at(color, rect):
                 e = elements.enemy_junkie(color, rect.center, vector)
                 
 def init_stats():
+    global pl_goodies
     graphic_goodies.HUD_point()
     graphic_goodies.HUD_level()
     for p in player:
-        graphic_goodies.HUD_hp(p)
-        graphic_goodies.HUD_ammo(p)
+        pl_goodies += [graphic_goodies.HUD_hp(p)]
+        pl_goodies += [graphic_goodies.HUD_ammo(p)]
     #graphic_goodies.HUD_gun()
     
 def init_landscape():
@@ -58,5 +61,14 @@ def casual_goodie():
     g = random.choice(goodies.f_names)
     eval('goodies.'+g+'()')
     
+def clear_goodies():
+    global pl_goodies
+    for g in pl_goodies:
+        g_goodies.remove(g)
+        pl_goodies = []
     
-    
+def restart_pl_goodies():
+    global pl_goodies
+    for p in player:
+        pl_goodies += [graphic_goodies.HUD_hp(p)]
+        pl_goodies += [graphic_goodies.HUD_ammo(p)]

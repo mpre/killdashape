@@ -73,7 +73,7 @@ class HUD_ammo(HUD_el):
         HUD_el.__init__(self)
         self.player = player
         self.image = self.font.render('AMMO[{1}]: {0}'.format(game_m.get_ammo(player), 
-                                                              self.player.get_p_number()),
+                                                              self.player.get_p_number()+1),
                                       True, self.color)
         self.rect = self.image.get_rect()
         self.rect.bottomleft = (10, K_WINDOW_DIM[1]-3 - (player.get_p_number())*15)

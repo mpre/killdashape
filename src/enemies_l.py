@@ -108,19 +108,9 @@ class fw_enemy(enemy_box):
     
     def update(self, event=None, rest=None):
         self.t += 1
-        self.rect = self.rect.move(int(-K_ENEMY_MOV * math.log(self.t) * random.uniform(1,1.5)), 0)
+        self.rect = self.rect.move(int(-K_ENEMY_MOV * math.log(self.t/2 + 0.5) * random.uniform(1,1.5)), 0)
         if self.rect.right < -10:
             self.silent_die()
-        if not self.cooldown:
-            if random.randint(1,10) <= 6:
-                x = elements.bullet( (255,255,255),
-                                     (self.rect.left, self.rect.centery),
-                                     (-1,0),
-                                     4)
-                en_bullets.add(x)
-            self.cooldown = int(K_COOLDOWN * float(20)/math.log(game_m.get_level()+1)) + random.randint(1, 10)
-        else:
-            self.cooldown -= 1
         return
     
 class follower_enemy(enemy_box):

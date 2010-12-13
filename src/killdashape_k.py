@@ -23,7 +23,7 @@ M_SOUTH = 2
 M_EAST = 3
 K_MOV = 5
 
-K_TICK = 30
+K_TICK = 35
 
 K_ENEMY_MOV = 4
 K_HORDE_SIZE = 5
@@ -73,11 +73,11 @@ M_RIGHT[0] = [K_RIGHT]
 M_LEFT[0] = [K_LEFT]
 M_WEAPON_SHOOT[0] = [K_RCTRL]
 # PLAYER 2
-M_DOWN[1] = [K_m]
-M_UP[1] = [K_k]
-M_RIGHT[1] = [K_COMMA]
-M_LEFT[1] = [K_n]
-M_WEAPON_SHOOT[1] = [K_v]
+M_DOWN[1] = [K_s]
+M_UP[1] = [K_w]
+M_RIGHT[1] = [K_d]
+M_LEFT[1] = [K_a]
+M_WEAPON_SHOOT[1] = [K_LCTRL]
 #PLAYER 3
 M_DOWN[2] = [K_KP6]
 M_UP[2] = [K_KP5]

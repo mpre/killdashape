@@ -71,7 +71,7 @@ def main():
     
     useful_lib.init_stats()
     useful_lib.init_landscape()
-    
+    #game_m.pause()
     while not END:
         if not game_m.is_paused():
             clock.tick(K_TICK)
@@ -81,6 +81,30 @@ def main():
                     IMMEDIATE = True
                 elif e.type == KEYDOWN and e.key in M_PAUSE:
                     game_m.pause()
+                elif e.type == KEYDOWN and e.key in [K_1,K_2,K_3,K_4]:
+                    if e.key == K_1:
+                        num = 0
+                    elif e.key == K_2:
+                        num = 1
+                    elif e.key == K_3:
+                        num = 2
+                    else:
+                        num = 3
+                    presente = False
+                    print 'schiacciato:',num
+                    for p in player:
+                        print p,p.get_p_number()
+                        if p.get_p_number() == num:
+                            presente = True
+                    if not presente:
+                        a = elements.player_box(K_PLAYER_COLOR[num], 
+                                                [K_BOX_DIMENSION[0]/2, K_WINDOW_DIM[1]/2 + 15*((-1)**num)*(num+1)], 
+                                                num+1)
+                        game_m.add_player(a)
+                        game_m.set_fan_weapon(a)
+                        useful_lib.clear_goodies()
+                        useful_lib.restart_pl_goodies()
+                    
                 else:
                     already_used = False
                     for p in player:

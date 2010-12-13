@@ -145,6 +145,8 @@ class player_box(box):
             create_explosion_at(self.color, self.rect)
             g_goodies.remove(self.baloon)
             player.remove(self)
+            useful_lib.clear_goodies()
+            useful_lib.restart_pl_goodies()
     
     def add_weapons(self, weapons=None):
         if weapons.__class__.__name__ == 'list':
