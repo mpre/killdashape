@@ -89,6 +89,7 @@ class player_box(box):
                                              (255,255,255), (0,0,0), False)
     
     def give(self, event=None, rest=None):
+        done = True
         if event.type == KEYDOWN:
             if event.key in M_DOWN[self.nplayer]:
                 self.direction[M_SOUTH] = True
@@ -102,6 +103,7 @@ class player_box(box):
                 for weapon in self.weapons:
                     weapon.give(event)
             else:
+                done = False
                 print 'unrecognized:'+str(event)
                 
         elif event.type == KEYUP:
@@ -117,7 +119,9 @@ class player_box(box):
                 for weapon in self.weapons:
                     weapon.give(event)
             else:
+                done = False
                 print 'unrecognized:'+str(event)
+        return done
                 
     def update(self):
         if self.direction[M_SOUTH]:

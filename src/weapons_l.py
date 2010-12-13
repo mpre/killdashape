@@ -159,7 +159,7 @@ class fan_weapon(base_weapon):
                 snd_master.play('shoot')           
                 bullets.add(x)
                 if not self.ammo:
-                    game_master.game_m.set_base_weapon(self.father.get_p_number())
+                    game_master.game_m.set_base_weapon(self.father)
                     self.kill()
         else:
             self.cooldown -= 1

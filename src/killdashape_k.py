@@ -53,9 +53,10 @@ K_ENEMY_BOX_PT = 100
 K_ENEMY_SIN = 150
 
 
-K_P1_COLOR = (255,0,0)
-K_P2_COLOR = (0,0,0)
-
+K_PLAYER_COLOR = [(255,0,0),
+                  (0,0,0),
+                  (0,255,200),
+                  (0,100,220)]
 # GRUPPI TASTI
 M_DOWN = [[],[]]
 M_UP = [[],[]]

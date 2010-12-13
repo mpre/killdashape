@@ -44,44 +44,33 @@ def main():
         rectlist += gds.draw(screen)
             
         pygame.display.update(rectlist)
-        if not platform.system() == 'Darwin':
-            pygame.display.update()
+        #if not platform.system() == 'Darwin':
+        pygame.display.update()
         
     
     pygame.init()  
     END = False
-    a_died = False
-    b_died = True
-    two_players = False
-    
+    IMMEDIATE = False
+    n_player = 2
+    player_dead = [True for _ in range(4)]    
     
     clock = pygame.time.Clock()
-    screen = pygame.display.set_mode(K_WINDOW_DIM)#, pygame.FULLSCREEN)
+    screen = pygame.display.set_mode(K_WINDOW_DIM)
     pygame.display.set_caption("killdashape")
     #background = pygame.Surface(K_WINDOW_DIM)
     background = pygame.image.load(IMG_PATH + 'background.png').convert()
-    init_back_rect = background.get_rect()
+    init_back_rect = background.get_rect()        
     
-    a = elements.player_box(K_P1_COLOR, 
-                            [K_BOX_DIMENSION[0]/2, K_WINDOW_DIM[1]/2])
-    player.add(a)
-    
-    if two_players:
-        b_died = False
-        b = elements.player_box(K_P2_COLOR,
-                                [K_BOX_DIMENSION[0]/2, K_WINDOW_DIM[1]/2], 2)
-        player.add(b)
-        
+    for i in range(n_player):
+        player_dead[i] = False
+        a = elements.player_box(K_PLAYER_COLOR[i], 
+                                [K_BOX_DIMENSION[0]/2, K_WINDOW_DIM[1]/2], i+1)
+        player.add(a)
+        game_m.add_player(a)
+        game_m.set_fan_weapon(a)
     
     useful_lib.init_stats()
     useful_lib.init_landscape()
-    
-    game_m.add_player(a)
-    game_m.set_fan_weapon(0)
-    if two_players:
-        game_m.add_player(b)
-        game_m.set_fan_weapon(1)
-    #game_m.add_enemy()
     
     while not END:
         if not game_m.is_paused():
@@ -89,12 +78,14 @@ def main():
             for e in pygame.event.get():
                 if e.type == QUIT:
                     END = True
+                    IMMEDIATE = True
                 elif e.type == KEYDOWN and e.key in M_PAUSE:
                     game_m.pause()
                 else:
-                    a.give(e)
-                    if two_players:
-                        b.give(e)
+                    already_used = False
+                    for p in player:
+                        if not already_used:
+                            already_used = p.give(e)
             lndscp_back.update()
             lndscp_front.update()
             player.update()
@@ -106,71 +97,36 @@ def main():
             back_elements.update()
             gds.update()
             
-            if not a_died:
-                en_collided = pygame.sprite.spritecollide(a, enemies, 0)
+            for p in player:
+                en_collided = pygame.sprite.spritecollide(p, enemies, 0)
                 if en_collided != []:
-                    a.kill()
+                    p.kill()
                     for enem in en_collided:
                         enem.kill()
-                    if a.hit_point() == 0:
-                        a_died = True
-                        END = b_died and a_died
-                
-                bull_collided = pygame.sprite.spritecollide(a, en_bullets, 0)
-                if  bull_collided != []:
-                    a.kill()
+                    if p.hit_point() == 0:
+                        if len(player) == 0:
+                            END = True
+                bull_collided = pygame.sprite.spritecollide(p, en_bullets, 0)
+                if bull_collided != []:
+                    p.kill()
                     for bull in bull_collided:
                         bull.kill()
-                    if a.hit_point() == 0:
-                        a_died = True
-                        END = b_died and a_died
-                
-                land_collided = pygame.sprite.spritecollide(a, lndscp_back, 0)
+                    if p.hit_point() == 0:
+                        if len(player) == 0:
+                            END = True
+                land_collided = pygame.sprite.spritecollide(p, lndscp_back, 0)
                 if land_collided != []:
                     for element in land_collided:
-                        if element.hurts() and a:
-                            a.kill()
-                            if a.hit_point() == 0:
-                                a_died = True
-                                END = b_died and a_died
-                
-                gds_collided = pygame.sprite.spritecollide(a, gds, 0)
+                        if element.hurts():
+                            while p.hit_point() > 0:
+                                p.kill()
+                                if len(player) == 0:
+                                    END = True
+                gds_collided = pygame.sprite.spritecollide(p, gds, 0)
                 if gds_collided != []:
                     for element in gds_collided:
-                        element.kill(0)
-                  
-            if two_players and not b_died:  
-                en_collided = pygame.sprite.spritecollide(b, enemies, 0)
-                if en_collided != []:
-                    b.kill()
-                    for enem in en_collided:
-                        enem.kill()
-                    if b.hit_point() == 0:
-                        b_died = True
-                        END = b_died and a_died
+                        element.kill(p)
                 
-                bull_collided = pygame.sprite.spritecollide(b, en_bullets, 0)
-                if  bull_collided != []:
-                    b.kill()
-                    for bull in bull_collided:
-                        bull.kill()
-                    if b.hit_point() == 0:
-                        b_died = True
-                        END = b_died and a_died
-                
-                land_collided = pygame.sprite.spritecollide(b, lndscp_back, 0)
-                if land_collided != []:
-                    for element in land_collided:
-                        if element.hurts() and a:
-                            b.kill()
-                            if b.hit_point() == 0:
-                                b_died = True
-                                END = b_died and a_died
-                
-                gds_collided = pygame.sprite.spritecollide(b, gds, 0)
-                if gds_collided != []:
-                    for element in gds_collided:
-                        element.kill(1)
                    
             pygame.sprite.groupcollide(bullets, en_bullets, 0, 1)
             pygame.sprite.groupcollide(bullets, enemies, 1, 1)
@@ -178,32 +134,31 @@ def main():
 
             print_things()
             game_m.act()
-            
-            if a_died and b_died:
-                for _ in range(30):
-                    clock.tick(K_TICK)
-                    bullets.update()
-                    lndscp_back.update()
-                    lndscp_front.update()
-                    enemies.update()
-                    junkie.update()
-                    en_bullets.update()
-                    g_goodies.update()
-                    print_things()
-            elif a_died:
-                player.remove(a)
-            elif b_died and two_players:
-                player.remove(b)
+
         else:
             for e in pygame.event.get():
                 if e.type == QUIT:
                     END = True
+                    IMMEDIATE = True
                 elif e.type == KEYDOWN and e.key in M_EXIT:
                     END = True
+                    IMMEDIATE = True
                 elif e.type == KEYDOWN and e.key in M_PAUSE:
                     game_m.pause()
             g_goodies.update() # Per stampare 'pausa'
-        
+         
+    if not IMMEDIATE:   
+        for _ in range(30):
+                        clock.tick(K_TICK)
+                        bullets.update()
+                        lndscp_back.update()
+                        lndscp_front.update()
+                        enemies.update()
+                        junkie.update()
+                        en_bullets.update()
+                        g_goodies.update()
+                        print_things()
+            
     
 
 if __name__ == '__main__':

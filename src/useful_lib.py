@@ -37,12 +37,10 @@ def create_explosion_at(color, rect):
                 
 def init_stats():
     graphic_goodies.HUD_point()
-    graphic_goodies.HUD_hp()
     graphic_goodies.HUD_level()
-    graphic_goodies.HUD_ammo()
-    if game_m.two_players():
-        graphic_goodies.HUD_hp(1)
-        graphic_goodies.HUD_ammo(1)
+    for p in player:
+        graphic_goodies.HUD_hp(p)
+        graphic_goodies.HUD_ammo(p)
     #graphic_goodies.HUD_gun()
     
 def init_landscape():
