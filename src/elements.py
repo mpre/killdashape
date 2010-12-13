@@ -175,6 +175,7 @@ class enemy_junkie(pygame.sprite.Sprite):
         self.init_pos = init_pos
         self.vector = vector
         self.times = 0
+        junkie.add(self)
         
     def update(self):
         offset_x = self.vector[0] * K_JUNK_MOV / math.sqrt(( self.vector[0]**2 + self.vector[1]**2))

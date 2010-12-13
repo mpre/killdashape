@@ -34,7 +34,6 @@ def create_explosion_at(color, rect):
                    (-2,1), (-2,-1), (-0.5,1), (-0.5,-1)
                    ):
                 e = elements.enemy_junkie(color, rect.center, vector)
-                junkie.add(e)
                 
 def init_stats():
     graphic_goodies.HUD_point()
