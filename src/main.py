@@ -62,13 +62,13 @@ def main():
     background = pygame.image.load(IMG_PATH + 'background.png').convert()
     init_back_rect = background.get_rect()
     
-    a = elements.player_box([255, 0, 0], 
+    a = elements.player_box(K_P1_COLOR, 
                             [K_BOX_DIMENSION[0]/2, K_WINDOW_DIM[1]/2])
     player.add(a)
     
     if two_players:
         b_died = False
-        b = elements.player_box([0,0,255],
+        b = elements.player_box(K_P2_COLOR,
                                 [K_BOX_DIMENSION[0]/2, K_WINDOW_DIM[1]/2], 2)
         player.add(b)
         
