@@ -52,7 +52,7 @@ def main():
     END = False
     a_died = False
     b_died = True
-    two_players = True
+    two_players = False
     
     
     clock = pygame.time.Clock()

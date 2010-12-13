@@ -227,8 +227,8 @@ class en_baloon(baloon):
 class cloud(pygame.sprite.Sprite):
     def __init__(self, y_pos=None):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(IMG_PATH + 'cloud.png').convert()
-        self.image.set_colorkey((0,0,0))
+        self.image = pygame.image.load(IMG_PATH + 'cloud2.png').convert()
+        self.image.set_colorkey(self.image.get_at((0,0)))
         self.rect = self.image.get_rect()
         if not y_pos:
             y_pos=random.randint(5,K_WINDOW_DIM[1]/3)
