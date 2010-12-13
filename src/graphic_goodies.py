@@ -39,15 +39,16 @@ class HUD_point(HUD_el):
         
 class HUD_hp(HUD_el):
     
-    def __init__(self):
+    def __init__(self, player=0):
         HUD_el.__init__(self)
-        self.image = self.font.render('HP: {0}'.format(game_m.get_hp()),
+        self.image = self.font.render('HP[{1}]: {0}'.format(game_m.get_hp(player), player+1),
                                       True, self.color)
         self.rect = self.image.get_rect()
-        self.rect.topleft = (K_WINDOW_DIM[0]-50, 3)
+        self.rect.topleft = (K_WINDOW_DIM[0]-50, 3 + (player)*15)
+        self.player=player
         
     def update(self):
-        self.image = self.font.render('HP: {0}'.format(game_m.get_hp()),
+        self.image = self.font.render('HP[{1}]: {0}'.format(game_m.get_hp(self.player), self.player+1),
                                       True, self.color)   
 
 class HUD_level(HUD_el):
@@ -66,15 +67,16 @@ class HUD_level(HUD_el):
         
 class HUD_ammo(HUD_el):
     
-    def __init__(self):
+    def __init__(self, player=0):
         HUD_el.__init__(self)
-        self.image = self.font.render('AMMO: {0}'.format(game_m.get_ammo()),
+        self.image = self.font.render('AMMO[{1}]: {0}'.format(game_m.get_ammo(player), player+1),
                                       True, self.color)
         self.rect = self.image.get_rect()
-        self.rect.bottomleft = (10, K_WINDOW_DIM[1]-3)
+        self.rect.bottomleft = (10, K_WINDOW_DIM[1]-3 - (player)*15)
+        self.player = player
         
     def update(self):
-        self.image = self.font.render('AMMO: {0}'.format(game_m.get_ammo()),
+        self.image = self.font.render('AMMO[{1}]: {0}'.format(game_m.get_ammo(self.player), self.player+1),
                                       True, self.color)
         
 class HUD_gun(HUD_el):

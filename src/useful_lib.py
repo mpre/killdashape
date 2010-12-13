@@ -40,6 +40,9 @@ def init_stats():
     graphic_goodies.HUD_hp()
     graphic_goodies.HUD_level()
     graphic_goodies.HUD_ammo()
+    if game_m.two_players():
+        graphic_goodies.HUD_hp(1)
+        graphic_goodies.HUD_ammo(1)
     #graphic_goodies.HUD_gun()
     
 def init_landscape():

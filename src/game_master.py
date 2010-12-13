@@ -163,5 +163,11 @@ class game_master(object):
             useful_lib.init_pause()
         else:
             snd_master.pause_loop()
+            
+    def two_players(self):
+        if len(player) > 1:
+            return True
+        else:
+            return False
                 
 game_m = game_master()

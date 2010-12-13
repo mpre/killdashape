@@ -14,8 +14,8 @@ try:
     from sound_master import *
     import game_master
     from global_vars import *
-except:
-    print "cazzo non ha importato bene pappa"
+except Exception, message:
+    print "cazzo non ha importato bene in elements:",message
 
 class bullet(pygame.sprite.Sprite):
     """Single bullet class"""
@@ -140,6 +140,7 @@ class player_box(box):
         if self.hp == 0:
             create_explosion_at(self.color, self.rect)
             g_goodies.remove(self.baloon)
+            player.remove(self)
     
     def add_weapons(self, weapons=None):
         if weapons.__class__.__name__ == 'list':
@@ -150,6 +151,7 @@ class player_box(box):
             
     def add_weapon(self, weapon):
         weapon.set_father(self)
+        weapon.set_key(M_WEAPON_SHOOT[self.nplayer])
         self.weapons.add(weapon)
         
     def clear_weapons(self):
@@ -163,6 +165,9 @@ class player_box(box):
     
     def get_weapon(self):
         return self.weapons.sprite.get_name()
+    
+    def get_p_number(self):
+        return self.nplayer
         
 class enemy_junkie(pygame.sprite.Sprite):
     """Gli scarti generati dalla morte dei nemici"""

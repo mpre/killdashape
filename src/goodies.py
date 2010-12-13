@@ -41,8 +41,8 @@ class triple_w_goodie(goodie):
         self.rect.center = ((random.randint(100, K_WINDOW_DIM[0]),
                             random.randint(0, K_WINDOW_DIM[1])))
         
-    def kill(self):
-        game_master.game_m.set_triple_weapon()
+    def kill(self, player=0):
+        game_master.game_m.set_triple_weapon(player)
         self.die()
 
 class beam_goodie(goodie):
@@ -54,8 +54,8 @@ class beam_goodie(goodie):
         self.rect.center = ((random.randint(100, K_WINDOW_DIM[0]),
                             random.randint(0, K_WINDOW_DIM[1])))
         
-    def kill(self):
-        game_master.game_m.set_beam_weapon()
+    def kill(self, player=0):
+        game_master.game_m.set_beam_weapon(player)
         self.die()
 
 class fan_goodie(goodie):
@@ -67,6 +67,6 @@ class fan_goodie(goodie):
         self.rect.center = ((random.randint(100, K_WINDOW_DIM[0]),
                             random.randint(0, K_WINDOW_DIM[1])))
         
-    def kill(self):
-        game_master.game_m.set_fan_weapon()
+    def kill(self, player=0):
+        game_master.game_m.set_fan_weapon(player)
         self.die()

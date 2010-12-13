@@ -20,11 +20,11 @@ except:
 
 class base_weapon(pygame.sprite.Sprite):
     """Arma basilare che spara un proiettile alla volta in una direzione"""
-    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, 
+    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT[0], bullet_speed=1, 
                  active=False, father=None, nplayer=0):
         pygame.sprite.Sprite.__init__(self)
         self.cooldown = 0
-        self.key = firing_key[nplayer]
+        self.key = firing_key
         self.direction = d_vector
         self.father = father
         self.active = active
@@ -57,6 +57,9 @@ class base_weapon(pygame.sprite.Sprite):
     def set_father(self, father):
         self.father = father
         
+    def set_key(self, keys):
+        self.key = keys
+        
     def kill(self):
         self = None
         
@@ -72,7 +75,7 @@ class base_weapon(pygame.sprite.Sprite):
 class triple_directed_weapon(base_weapon):
     """Arma che spara tre proiettili alla volta, in una sola direzione"""
                 
-    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, 
+    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT[0], bullet_speed=1, 
                  active=False, father=None, nplayer=0):
         base_weapon.__init__(self, d_vector, firing_key, bullet_speed, active, father, nplayer)
         self.ammo = K_TRIPLE_AMMO
@@ -101,13 +104,13 @@ class triple_directed_weapon(base_weapon):
                 snd_master.play('shoot')
                 bullets.add(x)
                 if not self.ammo:
-                    game_master.game_m.set_base_weapon()
+                    game_master.game_m.set_base_weapon(self.father.get_p_number())
                     self.kill()
         else:
             self.cooldown -= 1
         
 class fan_weapon(base_weapon):
-    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, 
+    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT[0], bullet_speed=1, 
                  active=False, father=None, nplayer=0):
         base_weapon.__init__(self, d_vector, firing_key, bullet_speed, active, father, nplayer)
         self.ammo = K_FAN_AMMO
@@ -156,13 +159,13 @@ class fan_weapon(base_weapon):
                 snd_master.play('shoot')           
                 bullets.add(x)
                 if not self.ammo:
-                    game_master.game_m.set_base_weapon()
+                    game_master.game_m.set_base_weapon(self.father.get_p_number())
                     self.kill()
         else:
             self.cooldown -= 1
 
 class h_weapon(base_weapon):
-    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, 
+    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT[0], bullet_speed=1, 
                  active=False, father=None, nplayer=0):
         base_weapon.__init__(self, d_vector, firing_key, bullet_speed, active, father, nplayer)
         self.name = 'Slam Dunk!'
@@ -185,7 +188,7 @@ class h_weapon(base_weapon):
             
 class beam_wall_weapon(base_weapon):
     
-    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT, bullet_speed=1, 
+    def __init__(self, d_vector, firing_key=M_WEAPON_SHOOT[0], bullet_speed=1, 
                  active=False, father=None, nplayer=0):
         base_weapon.__init__(self, d_vector, firing_key, bullet_speed, father, nplayer)
         self.ammo = K_BEAM_AMMO  
@@ -204,7 +207,7 @@ class beam_wall_weapon(base_weapon):
                 snd_master.play('beam')
                 bullets.add(x)
                 if not self.ammo:
-                    game_master.game_m.set_base_weapon()
+                    game_master.game_m.set_base_weapon(self.father.get_p_number())
                     self.kill()
         else:
             self.cooldown -= 1
