@@ -215,11 +215,17 @@ def print_score(screen):
         rect.left = K_WINDOW_DIM[0]/2 - 80
         screen.blit(image, rect)
     end = False
-    image = font.render('TOTAL SCORE: {0}'.format(game_m.get_points()),
+    image = font.render('TOTAL : {0}'.format(game_m.get_points()),
+                        True, K_FONT_COLOR)
+    rect = image.get_rect()
+    rect.top = K_WINDOW_DIM[1]/3 + 115
+    rect.left = K_WINDOW_DIM[0]/2 - 80
+    screen.blit(image, rect)
+    image = font.render('PRESS ANY KEY TO EXIT',
                         True, K_FONT_COLOR)
     rect = image.get_rect()
     rect.top = K_WINDOW_DIM[1]/3 + 155
-    rect.left = K_WINDOW_DIM[0]/2 - 80
+    rect.centerx = K_WINDOW_DIM[0]/2
     screen.blit(image, rect)
     pygame.display.update()
     while not end:
