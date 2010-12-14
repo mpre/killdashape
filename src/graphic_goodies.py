@@ -271,4 +271,60 @@ class floor(pygame.sprite.Sprite):
         
     def hurts(self):
         return True
+    
+class MS_car(pygame.sprite.Sprite):
+    def __init__(self, img_path=IMG_PATH+'car.png', img_size=(69,42)):
+        pygame.sprite.Sprite.__init__(self)
+        self.col = 0
+        self.row = 0
+        self.img_size = img_size
+        self.img_ss = pygame.image.load(img_path).convert()
+        self.ss_rect = (0,0,img_size[0],img_size[1])
+        self.image = pygame.Surface(img_size)
+        self.image.blit(self.img_ss, (0,0), self.ss_rect)
+        self.image.set_colorkey(self.image.get_at((1,1)))
+        self.image = pygame.transform.scale(self.image, (34,21))
+        self.rect = self.image.get_rect()
+        self.rect.bottomright = (-1, K_WINDOW_DIM[1] - 7)
+        self.cooldown = 3
+        lndscp_front.add(self)
+        
+    def update(self):
+        if not self.cooldown:
+            self.cooldown = 3
+            self.col += 1
+            self.col %= 6
+            self.row += self.col % 6
+            self.row %= 2
+            self.ss_rect = (self.img_size[0]*self.col,
+                            self.img_size[1]*self.row,
+                            self.img_size[0]*(self.col+1),
+                            self.img_size[1]*(self.row+1))
+            self.image = pygame.Surface(self.img_size)
+            self.image.blit(self.img_ss, (0,0), self.ss_rect)
+            self.image = pygame.transform.scale(self.image, (34,21))
+            self.image.set_colorkey(self.image.get_at((1,1)))
+        else:
+            self.cooldown -= 1
+        self.rect = self.rect.move(3,0)
+        if self.rect.left > K_WINDOW_DIM[0]:
+            self.kill()
+            
+    def kill(self):
+        lndscp_front.remove(self)
+        self = None
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         

@@ -116,6 +116,9 @@ class game_master(object):
             
         if random.randint(1,200) == 42:
             graphic_goodies.cloud()
+        
+        if random.randint(1,700) == 52:
+            graphic_goodies.MS_car()
                     
     def rollstate(self):
         return random.choice(self.possible_states)

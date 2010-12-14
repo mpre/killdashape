@@ -57,7 +57,6 @@ def main():
     clock = pygame.time.Clock()
     screen = pygame.display.set_mode(K_WINDOW_DIM)
     pygame.display.set_caption("killdashape")
-    #background = pygame.Surface(K_WINDOW_DIM)
     background = pygame.image.load(IMG_PATH + 'background.png').convert()
     init_back_rect = background.get_rect()        
     

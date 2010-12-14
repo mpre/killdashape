@@ -82,7 +82,7 @@ class box(pygame.sprite.Sprite):
 
 class player_box(box):
     """L'utente"""
-    def __init__(self, color, initial_pos, nplayer=1):
+    def __init__(self, color, initial_pos, nplayer=1, img_size=K_PLAYER_IMG_SIZE):
         box.__init__(self, color, initial_pos)
         self.direction = [False for _ in range(4)]
         self.weapons = pygame.sprite.GroupSingle()
@@ -92,6 +92,20 @@ class player_box(box):
         self.baloon = graphic_goodies.baloon((str(nplayer)+'P', str(nplayer)+'P'), 
                                              self, 10, FONT_PATH + "bitlow.ttf", 
                                              (0,0,0), (255,255,255), False)
+        self.col = 0
+        self.row = 0
+        self.img_size = [x/K_PLAYER_IMAGE_FACTOR for x in img_size]
+        self.img_ss = pygame.image.load(IMG_PATH + 'elicopter' + str(nplayer) + '.png').convert()
+        self.img_ss = pygame.transform.scale(self.img_ss, [x/K_PLAYER_IMAGE_FACTOR for x in self.img_ss.get_size()])
+        self.ss_rect = (0,0,self.img_size[0],self.img_size[1])
+        self.image = pygame.Surface(self.img_size)
+        self.image.blit(self.img_ss, (0,0), self.ss_rect)
+        self.image.set_colorkey(self.image.get_at((1,1)))
+        #self.image = pygame.transform.scale(self.image, (34,21))
+        self.rect = self.image.get_rect()
+        #self.rect.bottomright = (-1, K_WINDOW_DIM[1] - 7)
+        self.rect.center = initial_pos
+        self.cooldown_img = 3
     
     def give(self, event=None, rest=None):
         done = True
@@ -141,6 +155,22 @@ class player_box(box):
         if self.direction[M_EAST]:
             if not self.rect.right >= K_WINDOW_DIM[0] - K_MOV:
                 self.rect = self.rect.move(K_MOV, 0)
+        if not self.cooldown_img:
+            self.cooldown_img = 3
+            self.col += 1
+            self.col %= 5
+            self.row += self.col % 5
+            self.row %= 6
+            self.ss_rect = (self.img_size[0]*self.col,
+                            self.img_size[1]*self.row,
+                            self.img_size[0]*(self.col+1),
+                            self.img_size[1]*(self.row+1))
+            self.image = pygame.Surface(self.img_size)
+            self.image.blit(self.img_ss, (0,0), self.ss_rect)
+            #self.image = pygame.transform.scale(self.image, (34,21))
+            self.image.set_colorkey(self.image.get_at((1,1)))
+        else:
+            self.cooldown_img -= 1
         self.weapons.update()             
         
     def kill(self):
