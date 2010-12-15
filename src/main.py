@@ -91,7 +91,6 @@ def main():
                     else:
                         num = 3
                     presente = False
-                    print 'schiacciato:',num
                     for p in player:
                         print p,p.get_p_number()
                         if p.get_p_number() == num:

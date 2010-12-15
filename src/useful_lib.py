@@ -35,8 +35,16 @@ def create_explosion_at(color, rect):
                    (2,1), (2,-1), (0.5,1), (0.5,-1),
                    (-2,1), (-2,-1), (-0.5,1), (-0.5,-1)
                    ):
-                e = elements.enemy_junkie(color, rect.center, vector)
+                elements.enemy_junkie(color, rect.center, vector)
                 
+def create_explosion_at_pos(color, pos):
+    for vector in ((1,0), (1,1), (0,1), (-1,1), 
+                   (-1,0), (-1,-1), (0,-1), (1,-1),
+                   (2,1), (2,-1), (0.5,1), (0.5,-1),
+                   (-2,1), (-2,-1), (-0.5,1), (-0.5,-1)
+                   ):
+                elements.enemy_junkie(color, pos, vector)
+    
 def init_stats():
     global pl_goodies
     graphic_goodies.HUD_point()

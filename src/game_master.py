@@ -39,7 +39,7 @@ class game_master(object):
         self.player_points = [0 for _ in range(4)]
     
     def act(self):
-        print self.state
+        print 'game_m in :',self.state
         if not self.cooldown:
             if self.state == 'BEGIN':
                 self.state = random.choice((self.possible_states))
@@ -99,7 +99,12 @@ class game_master(object):
                 self.enemy_placed = 0
                 self.wait_in_state = 0
                 self.state = 'BEGIN'
-                self.cooldown = 7 * K_COOLDOWN           
+                self.cooldown = 7 * K_COOLDOWN 
+            elif self.state == 'BOSS':
+                print 'ciao:', len(enemies)
+                if len(enemies) == 0:
+                    snd_master.boss_loop()
+                    self.state = 'BEGIN'          
             else:
                 # Nessuno stato ?
                 self.state = 'BEGIN'
@@ -110,6 +115,10 @@ class game_master(object):
                 
         if math.sqrt(self.points/100) > self.level:
             self.level += 1
+            if self.level == 7:
+                snd_master.boss_loop()
+                enemies_l.boss_mark()
+                self.state = 'BOSS'
         
         if random.randint(1,100) == 42:
             useful_lib.casual_goodie()
@@ -178,6 +187,10 @@ class game_master(object):
             self.points += K_ENEMY_FOLLOWER_PT
             if who:
                 self.player_points[who.get_p_number()] += K_ENEMY_FOLLOWER_PT
+        elif name == 'boss_mark':
+            self.points += K_BOSS_MARK_PT
+            if who:
+                self.player_points[who.get_p_number()] += K_BOSS_MARK_PT
             
     def get_points(self):
         return self.points

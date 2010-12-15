@@ -155,9 +155,140 @@ class follower_enemy(enemy_box):
                     self.rect = self.rect.move(0, -K_ENEMY_MOV)
         
         
+# BOSSES
+
+class boss_mark(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.hp = K_BOSS_MARK_HP
+        self.state = 'BEGIN'
+        self.image = pygame.Surface((70,70))
+        self.image.set_colorkey(self.image.get_at((1,1)))
+        self.color = (110,30,200)
+        pygame.draw.polygon(self.image, self.color, 
+                            ((70,0), (0,35), (70,70)))
+        self.rect = self.image.get_rect()
+        self.rect.bottomleft = (K_WINDOW_DIM[0], K_WINDOW_DIM[1]/2)
+        self.useful_var = 0
+        self.cooldown = 20
+        self.direction = M_UP
+        self.crushing = True
+        enemies.add(self)
         
         
+    def update(self):
+        print self.hp, self.state
+        if self.state == 'BEGIN':
+            self.rect = self.rect.move(-5,0)
+            if self.rect.right < K_WINDOW_DIM[0] - 150:
+                self.state = 'READY'
+        elif self.state == 'READY':
+            if self.useful_var == 0:
+                self.baloon = graphic_goodies.en_baloon(('SO YOU ARE THE SQUARE WHO IS KILLING MY FRIENDS!',
+                                                         'SO YOU ARE THE SQUARE WHO IS KILLING MY FRIENDS!'), self, 10, 
+                                                        FONT_PATH + "bitrip.ttf", 
+                                                        (255,255,255), (0,0,0), True)
+            elif self.useful_var == 2 * K_TICK:
+                g_goodies.remove(self.baloon)
+                self.baloon = graphic_goodies.en_baloon(('I\'M GONNA KILL YOU, SQUARETARD!',
+                                                         'I\'M GONNA KILL YOU, SQUARETARD!'), self, 10, 
+                                                        FONT_PATH + "bitrip.ttf", 
+                                                        (255,255,255), (0,0,0), True)
+            elif self.useful_var == 4 * K_TICK:
+                g_goodies.remove(self.baloon)
+                self.baloon = None
+                self.state = 'SHOOTING' 
+                self.direction = M_UP  
+                self.useful_var = 0   
+            elif self.useful_var > 4 * K_TICK:
+                if self.rect.right < K_WINDOW_DIM[0] - 35:
+                    self.rect = self.rect.move(5,0)
+                else:     
+                    self.state = 'SHOOTING' 
+            self.useful_var += 1
+        elif self.state == 'SHOOTING':
+            if self.direction == M_UP:
+                if self.rect.top < 35:
+                    self.direction = M_DOWN
+                else:
+                    self.rect = self.rect.move(0, -7)
+            elif self.direction == M_DOWN:
+                if self.rect.bottom > K_WINDOW_DIM[1] - 35:
+                    self.direction = M_UP
+                else:
+                    self.rect = self.rect.move(0, 7)
+                
+            if not self.cooldown:
+                    self.cooldown = 20
+                    for init_pos in (self.rect.topright, (self.rect.left, self.rect.centery), self.rect.bottomright):
+                        x = elements.bullet( (0,0,0),
+                                     init_pos,
+                                     (-1,0),
+                                     0.5)
+                        en_bullets.add(x)
+            else:
+                self.cooldown -= 1
+        elif self.state == 'CRUSH':
+            if not self.baloon:
+                self.baloon = graphic_goodies.en_baloon(('KAMIKAZEEEEEEE',
+                                                         'KAMIKAZEEEEEEE'), self, 10, 
+                                                        FONT_PATH + "bitrip.ttf", 
+                                                        (255,255,255), (0,0,0), True)
+            if self.crushing and self.rect.left > 3:
+                self.rect = self.rect.move(-15,0)
+                if self.rect.left <= 3:
+                    self.crushing = False
+            else:
+                if self.baloon:
+                    g_goodies.remove(self.baloon)
+                    self.baloon = None
+                self.rect = self.rect.move(5,0)
+                if self.rect.right >= K_WINDOW_DIM[0] - 70:
+                    self.state = 'SHOOTING'
+                    self.crushing = True
+            
         
+        elif self.state == 'DIE':
+            if self.useful_var == 1:
+                self.baloon = graphic_goodies.en_baloon(('OH NO, I HAVE 0 HP!!',
+                                                         'OH NO, I HAVE 0 HP!!'), self, 10, 
+                                                        FONT_PATH + "bitrip.ttf", 
+                                                        (255,255,255), (0,0,0), True)
+            elif self.useful_var == 2 * K_TICK:
+                g_goodies.remove(self.baloon)
+                self.baloon = graphic_goodies.en_baloon(('YOU KILLED ME!!',
+                                                         'YOU KILLED ME!!'), self, 10, 
+                                                        FONT_PATH + "bitrip.ttf", 
+                                                        (255,255,255), (0,0,0), True)
+            elif self.useful_var == 4 * K_TICK:
+                g_goodies.remove(self.baloon)
+                self.baloon = graphic_goodies.en_baloon(('I STILL LOVE YOU',
+                                                         'I STILL LOVE YOU'), self, 10, 
+                                                        FONT_PATH + "bitrip.ttf", 
+                                                        (255,255,255), (0,0,0), True)
+            elif self.useful_var == 6 * K_TICK:
+                self.die()
+            self.useful_var += 1
+
+              
+        
+    def kill(self, who=None):
+        if not self.state in ('BEGIN', 'READY', 'CRUSH'):
+            self.hp -= 1
+        if self.hp == 0:
+            game_m.is_dead(self.__class__.__name__, who)
+            self.state = 'DIE'
+        if self.hp in [int(i) for i in (K_BOSS_MARK_HP/2, K_BOSS_MARK_HP/3, K_BOSS_MARK_HP/4)]:
+            print 'DENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOO'
+            self.state = 'CRUSH'
+            
+    def die(self):
+        g_goodies.remove(self.baloon)
+        for pos in (self.rect.bottomleft, self.rect.bottomright, 
+                    self.rect.topright, self.rect.topleft, self.rect.center):
+            useful_lib.create_explosion_at_pos(self.color, pos)
+        enemies.remove(self)        
+            
         
         
         
