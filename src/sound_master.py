@@ -24,6 +24,7 @@ class sound_m(pygame.sprite.Sprite):
         self.snd['wow'] = pygame.mixer.Sound(SND_PATH + "wow.wav")
         self.snd['base_loop'] = pygame.mixer.Sound(SND_PATH + "game_loop4.aif")
         self.snd['mark_boss'] = pygame.mixer.Sound(SND_PATH + "game_loop3.wav")
+        self.snd['mark_explode'] = pygame.mixer.Sound(SND_PATH + "markexplode.wav")
         self.snd['base_loop'].play(-1)
         self.paused = False
         self.in_boss = False

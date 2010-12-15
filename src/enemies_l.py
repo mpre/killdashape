@@ -177,15 +177,14 @@ class boss_mark(pygame.sprite.Sprite):
         
         
     def update(self):
-        print self.hp, self.state
         if self.state == 'BEGIN':
             self.rect = self.rect.move(-5,0)
             if self.rect.right < K_WINDOW_DIM[0] - 150:
                 self.state = 'READY'
         elif self.state == 'READY':
             if self.useful_var == 0:
-                self.baloon = graphic_goodies.en_baloon(('SO YOU ARE THE SQUARE WHO IS KILLING MY FRIENDS!',
-                                                         'SO YOU ARE THE SQUARE WHO IS KILLING MY FRIENDS!'), self, 10, 
+                self.baloon = graphic_goodies.en_baloon(('SO YOU ARE THE SQUARE WHO IS KILLING MY FRIENDS..',
+                                                         'SO YOU ARE THE SQUARE WHO IS KILLING MY FRIENDS..'), self, 10, 
                                                         FONT_PATH + "bitrip.ttf", 
                                                         (255,255,255), (0,0,0), True)
             elif self.useful_var == 2 * K_TICK:
@@ -207,6 +206,20 @@ class boss_mark(pygame.sprite.Sprite):
                     self.state = 'SHOOTING' 
             self.useful_var += 1
         elif self.state == 'SHOOTING':
+            
+            if not self.baloon:
+                if random.randint(1,200) == 42:
+                    self.baloon = graphic_goodies.en_baloon(('UP AND DOWN ON MY BODY!',
+                                                             'LOLCAT'), self, 10, 
+                                                             FONT_PATH + "bitrip.ttf", 
+                                                             (255,255,255), (0,0,0), True)
+                    self.baloon_die_in = 5 * K_TICK
+            else:
+                self.baloon_die_in -= 1
+                if self.baloon_die_in == 0:
+                    g_goodies.remove(self.baloon)
+                    self.baloon = None
+            
             if self.direction == M_UP:
                 if self.rect.top < 35:
                     self.direction = M_DOWN
@@ -267,6 +280,7 @@ class boss_mark(pygame.sprite.Sprite):
                                                         FONT_PATH + "bitrip.ttf", 
                                                         (255,255,255), (0,0,0), True)
             elif self.useful_var == 6 * K_TICK:
+                snd_master.play('mark_explode')
                 self.die()
             self.useful_var += 1
 
@@ -275,11 +289,11 @@ class boss_mark(pygame.sprite.Sprite):
     def kill(self, who=None):
         if not self.state in ('BEGIN', 'READY', 'CRUSH'):
             self.hp -= 1
+            #snd_master.play('mark_kill')
         if self.hp == 0:
             game_m.is_dead(self.__class__.__name__, who)
             self.state = 'DIE'
         if self.hp in [int(i) for i in (K_BOSS_MARK_HP/2, K_BOSS_MARK_HP/3, K_BOSS_MARK_HP/4)]:
-            print 'DENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOO'
             self.state = 'CRUSH'
             
     def die(self):

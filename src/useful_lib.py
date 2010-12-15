@@ -62,7 +62,7 @@ def init_landscape():
     
 def init_pause():
     graphic_goodies.HUD_pause()
-    snd_master.pause_loop()
+    #snd_master.pause_loop()
     
 def casual_goodie():
     # Sceglie un goodie casuale
