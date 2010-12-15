@@ -293,6 +293,8 @@ class boss_mark(pygame.sprite.Sprite):
         if self.hp == 0:
             game_m.is_dead(self.__class__.__name__, who)
             self.state = 'DIE'
+            if self.baloon:
+                g_goodies.remove(self.baloon)
         if self.hp in [int(i) for i in (K_BOSS_MARK_HP/2, K_BOSS_MARK_HP/3, K_BOSS_MARK_HP/4)]:
             self.state = 'CRUSH'
             
