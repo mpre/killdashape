@@ -92,6 +92,8 @@ class player_box(box):
         self.baloon = graphic_goodies.baloon((str(nplayer)+'P', str(nplayer)+'P'), 
                                              self, 10, FONT_PATH + "bitlow.ttf", 
                                              (0,0,0), (255,255,255), False)
+        self.star = graphic_goodies.star(self)
+        
     
     def give(self, event=None, rest=None):
         done = True
@@ -144,14 +146,15 @@ class player_box(box):
         self.weapons.update()             
         
     def kill(self):
-        self.hp -= 1
-        snd_master.play('enemy_explosion')
-        if self.hp == 0:
-            create_explosion_at(self.color, self.rect)
-            g_goodies.remove(self.baloon)
-            player.remove(self)
-            useful_lib.clear_goodies()
-            useful_lib.restart_pl_goodies()
+        if self.star == None:
+            self.hp -= 1
+            snd_master.play('enemy_explosion')
+            if self.hp == 0:
+                create_explosion_at(self.color, self.rect)
+                g_goodies.remove(self.baloon)
+                player.remove(self)
+                useful_lib.clear_goodies()
+                useful_lib.restart_pl_goodies()
     
     def add_weapons(self, weapons=None):
         if weapons.__class__.__name__ == 'list':
@@ -179,6 +182,9 @@ class player_box(box):
     
     def get_p_number(self):
         return self.nplayer
+    
+    def remove_star(self):
+        self.star = None
         
 class enemy_junkie(pygame.sprite.Sprite):
     """Gli scarti generati dalla morte dei nemici"""

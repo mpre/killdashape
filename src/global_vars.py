@@ -19,4 +19,5 @@ gds = pygame.sprite.RenderUpdates()
 player = pygame.sprite.RenderUpdates()
 lndscp_back = pygame.sprite.RenderUpdates()
 lndscp_front = pygame.sprite.RenderUpdates()
+player_goodies = pygame.sprite.RenderUpdates()
 active_weapons = []

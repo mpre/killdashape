@@ -201,6 +201,35 @@ class background_star(pygame.sprite.Sprite):
     def kill(self):
         back_elements.remove(self)
 
+class story_baloon(HUD_el):
+    def __init__(self, msg, cooldown=2*K_TICK, font_dim=10, font=K_BALOON_FONT, font_color=(0,0,0), 
+                 font_backgroud=(255,255,255), alpha_background=True):
+        HUD_el.__init__(self, font_dim, font_color, font)
+        self.msg = msg
+        self.back_color = font_backgroud
+        self.cooldown = cooldown
+        self.died = False
+        if alpha_background:
+            self.image = self.font.render(self.msg, True, self.color, self.back_color)
+        else:
+            self.image = self.font.render(self.msg, True, self.color)
+        self.rect = self.image.get_rect()
+        
+    def update(self):
+        self.rect.center = (K_WINDOW_DIM[0]/2,
+                            K_WINDOW_DIM[1]/2 - 15
+                            )
+        self.cooldown -= 1
+        if self.cooldown == 0:
+            self.kill()
+            
+    def kill(self):
+        g_goodies.remove(self)
+        self.died = True
+        
+    def is_died(self):
+        return self.died
+        
 
 class baloon(HUD_el):
     def __init__(self, msg_group, father, font_dim=10, font=K_BALOON_FONT, font_color=(0,0,0), 
@@ -272,5 +301,39 @@ class floor(pygame.sprite.Sprite):
     def hurts(self):
         return True
 
-
+class star(pygame.sprite.Sprite):
+    def __init__(self, father):
+        pygame.sprite.Sprite.__init__(self)
+        self.father = father
+        self.image = pygame.Surface((K_BOX_DIMENSION[0], 
+                                     K_BOX_DIMENSION[1]))
+        self.image.fill((170,170,0))
+        self.color = 0
+        self.rect = self.image.get_rect()
+        self.rect.center = self.father.rect.center
+        self.cooldown = 3*K_TICK
+        player_goodies.add(self)
+        
+    def update(self):
+        self.cooldown -= 1
+        if self.cooldown % 5 == 0:
+            if self.color == 0:
+                self.image.fill((250,250,250))
+                self.color = 1
+            else:
+                self.image.fill((250,0,0))
+                self.color = 0
+        self.rect.center = self.father.rect.center
+        if self.cooldown == 0:
+            player_goodies.remove(self)
+            self.father.remove_star()
+            self = None
+        
+        
+        
+        
+        
+        
+        
+        
 

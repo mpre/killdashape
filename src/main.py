@@ -26,6 +26,23 @@ except Exception, message:
    
 def main(): 
     
+    def initial_scene():
+        for message in (('ONCE UPONE A TIME',
+                         'IN A FAR FAR AWAY CARTESIAN PLANE',
+                         'A SQUARE WAS FULL OF VENGANCE!',
+                         'IT\'S TIME TO KILL', 
+                         'ALL YOUR BASE BELONG TO US!')):
+            b_msg = graphic_goodies.story_baloon(message)
+            while not b_msg.is_died():
+                clock.tick(K_TICK)
+                g_goodies.update()
+                for event in pygame.event.get():
+                    if event.type == QUIT:
+                        pygame.quit()
+                    else:
+                        pass
+                print_things()
+        
     def print_things():
         init_back_rect.right -= 3
         if init_back_rect.right <= 0:
@@ -41,6 +58,7 @@ def main():
         rectlist += enemies.draw(screen)
         rectlist += junkie.draw(screen)
         rectlist += en_bullets.draw(screen)
+        rectlist += player_goodies.draw(screen)
         rectlist += gds.draw(screen)
             
         pygame.display.update(rectlist)
@@ -49,17 +67,21 @@ def main():
         
     
     pygame.init()  
+        
     END = False
     IMMEDIATE = False
     n_player = 1
     player_dead = [True for _ in range(4)]    
     
     clock = pygame.time.Clock()
-    screen = pygame.display.set_mode(K_WINDOW_DIM)
+    screen = pygame.display.set_mode(K_WINDOW_DIM, pygame.FULLSCREEN)
     pygame.display.set_caption("killdashape")
     #background = pygame.Surface(K_WINDOW_DIM)
     background = pygame.image.load(IMG_PATH + 'background.png').convert()
-    init_back_rect = background.get_rect()        
+    init_back_rect = background.get_rect()  
+    
+    useful_lib.init_landscape()      
+    initial_scene()
     
     for i in range(n_player):
         player_dead[i] = False
@@ -70,7 +92,6 @@ def main():
         game_m.set_fan_weapon(a)
     
     useful_lib.init_stats()
-    useful_lib.init_landscape()
     #game_m.pause()
     while not END:
         if not game_m.is_paused():
@@ -118,6 +139,7 @@ def main():
             en_bullets.update()
             g_goodies.update()
             back_elements.update()
+            player_goodies.update()
             gds.update()
             
             for p in player:
@@ -231,6 +253,7 @@ def print_score(screen):
         for e in pygame.event.get():
             if e.type == KEYDOWN or e.type == QUIT:
                 end = True    
+    
     
 if __name__ == '__main__':
     main()

@@ -83,7 +83,7 @@ M_DOWN[1] = [K_s]
 M_UP[1] = [K_w]
 M_RIGHT[1] = [K_d]
 M_LEFT[1] = [K_a]
-M_WEAPON_SHOOT[1] = [K_LCTRL]
+M_WEAPON_SHOOT[1] = [K_LSHIFT]
 #PLAYER 3
 M_DOWN[2] = [K_KP6]
 M_UP[2] = [K_KP5]

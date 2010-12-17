@@ -130,7 +130,7 @@ class game_master(object):
                 
         if math.sqrt(self.points/100) > self.level:
             self.level += 1
-            if self.level == 5:
+            if self.level == 15:
                 snd_master.boss_loop()
                 enemies_l.boss_mark()
                 self.state = 'BOSS'
