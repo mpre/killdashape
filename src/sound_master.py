@@ -8,8 +8,8 @@ try:
     import pygame
     from pygame.locals import *
     from killdashape_k import *
-except:
-    print "cazzo non ha importato bene"
+except Exceptio, message:
+    print "sound_master.py:",message
 
 pygame.init()
 

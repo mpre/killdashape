@@ -15,8 +15,8 @@ try:
     from useful_lib import *
     from sound_master import *
     import game_master
-except:
-    print "cazzo non ha importato bene in weapons"
+except Exception,message:
+    print 'weapons_l.py:',message
 
 class base_weapon(pygame.sprite.Sprite):
     """Arma basilare che spara un proiettile alla volta in una direzione"""

@@ -15,7 +15,7 @@ try:
     import game_master
     from global_vars import *
 except Exception, message:
-    print "cazzo non ha importato bene in elements:",message
+    print "elements.py:",message
 
 class bullet(pygame.sprite.Sprite):
     """Single bullet class"""

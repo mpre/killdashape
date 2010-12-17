@@ -22,7 +22,7 @@ try:
     import os
     import platform
 except Exception, message:
-    print "cazzo non ha importato bene sad a", message
+    print "main.py:", message
    
 def main(): 
     

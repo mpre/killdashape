@@ -11,8 +11,8 @@ try:
     from killdashape_k import *
     from global_vars import *
     from game_master import *
-except:
-    print 'Errore importando in graphic_goodies'
+except Exception, message:
+    print 'graphic_goodies.py:',message
     
 class HUD_el(pygame.sprite.Sprite):
     

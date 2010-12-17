@@ -18,8 +18,8 @@ try:
     from global_vars import *
     from sound_master import *
     import useful_lib
-except:
-    print 'mmmm'
+except Exception,message:
+    print 'game_master.py:',message
 
 class game_master(object):
     

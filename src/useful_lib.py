@@ -13,8 +13,8 @@ try:
     import elements
     from killdashape_k import *
     from game_master import *
-except:
-    print "cazzo non ha importato bene"
+except Exceptio,message:
+    print 'useful_lib.py:',message
 
 pl_goodies = []
 

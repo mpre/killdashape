@@ -10,8 +10,8 @@ try:
     import random
     from global_vars import *
     from killdashape_k import *
-except:
-    print 'Errore in goodies'
+except Exceptio,message:
+    print 'goodies.py:',message
 
 f_names = ['triple_w_goodie',
            'beam_goodie',

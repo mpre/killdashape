@@ -12,8 +12,8 @@ try:
     from sound_master import *
     from game_master import *
     import useful_lib
-except:
-    print 'Errore nell\'importazione in enemies'
+except Exception,message:
+    print 'enemies_l.py:',message
 
 class enemy_box(elements.box):
     """I nemici quadrati"""

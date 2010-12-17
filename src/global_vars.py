@@ -7,7 +7,7 @@ Created on 08/dic/2010
 try:
     import pygame
 except Exception, message:
-    print "cazzo non ha importato bene in global_vars", message
+    print "global_vars.py:", message
     
 enemies = pygame.sprite.RenderUpdates()
 en_bullets = pygame.sprite.RenderUpdates()
