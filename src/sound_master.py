@@ -8,7 +8,7 @@ try:
     import pygame
     from pygame.locals import *
     from killdashape_k import *
-except Exceptio, message:
+except Exception, message:
     print "sound_master.py:",message
 
 pygame.init()
