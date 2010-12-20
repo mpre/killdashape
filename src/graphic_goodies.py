@@ -307,8 +307,8 @@ class star(pygame.sprite.Sprite):
         self.father = father
         self.image = pygame.Surface((K_BOX_DIMENSION[0], 
                                      K_BOX_DIMENSION[1]))
-        self.image.fill((170,170,0))
-        self.color = 0
+        self.image.fill((255,255,255))
+        self.alpha_part = 0
         self.rect = self.image.get_rect()
         self.rect.center = self.father.rect.center
         self.cooldown = 3*K_TICK
@@ -317,12 +317,10 @@ class star(pygame.sprite.Sprite):
     def update(self):
         self.cooldown -= 1
         if self.cooldown % 5 == 0:
-            if self.color == 0:
-                self.image.fill((250,250,250))
-                self.color = 1
-            else:
-                self.image.fill((250,0,0))
-                self.color = 0
+            self.image.set_alpha(225/(
+                                      abs(self.alpha_part)+1))
+            self.alpha_part += 1
+            self.alpha_part %= 2
         self.rect.center = self.father.rect.center
         if self.cooldown == 0:
             player_goodies.remove(self)

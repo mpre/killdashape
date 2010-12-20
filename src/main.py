@@ -74,14 +74,15 @@ def main():
     player_dead = [True for _ in range(4)]    
     
     clock = pygame.time.Clock()
-    screen = pygame.display.set_mode(K_WINDOW_DIM, pygame.FULLSCREEN)
+    screen = pygame.display.set_mode(K_WINDOW_DIM)
     pygame.display.set_caption("killdashape")
+    pygame.mouse.set_visible(False)
     #background = pygame.Surface(K_WINDOW_DIM)
     background = pygame.image.load(IMG_PATH + 'background.png').convert()
     init_back_rect = background.get_rect()  
     
     useful_lib.init_landscape()      
-    initial_scene()
+    #initial_scene()
     
     for i in range(n_player):
         player_dead[i] = False
@@ -242,7 +243,7 @@ def print_score(screen):
     rect.top = K_WINDOW_DIM[1]/3 + 115
     rect.left = K_WINDOW_DIM[0]/2 - 80
     screen.blit(image, rect)
-    image = font.render('PRESS ANY KEY TO EXIT',
+    image = font.render('PRESS RETURN KEY TO EXIT',
                         True, K_FONT_COLOR)
     rect = image.get_rect()
     rect.top = K_WINDOW_DIM[1]/3 + 155
@@ -251,7 +252,7 @@ def print_score(screen):
     pygame.display.update()
     while not end:
         for e in pygame.event.get():
-            if e.type == KEYDOWN or e.type == QUIT:
+            if e.type == KEYDOWN and e.key == K_RETURN or e.type == QUIT:
                 end = True    
     
     

@@ -6,16 +6,18 @@ Created on 10/dic/2010
 
 try:
     import game_master
+    import sound_master
     import pygame
     import random
     from global_vars import *
     from killdashape_k import *
-except Exceptio,message:
+except Exception,message:
     print 'goodies.py:',message
 
 f_names = ['triple_w_goodie',
            'beam_goodie',
-           'fan_goodie']
+           'fan_goodie',
+           'hp_goodie']
 
 class goodie(pygame.sprite.Sprite):
     
@@ -42,6 +44,7 @@ class triple_w_goodie(goodie):
                             random.randint(0, K_WINDOW_DIM[1])))
         
     def kill(self, player=0):
+        sound_master.snd_master.play('triple_goodie')
         game_master.game_m.set_triple_weapon(player)
         self.die()
 
@@ -70,3 +73,19 @@ class fan_goodie(goodie):
     def kill(self, player=0):
         game_master.game_m.set_fan_weapon(player)
         self.die()
+
+class hp_goodie(goodie):
+    
+    def __init__(self, letter='1UP'):
+        goodie.__init__(self)
+        self.image = pygame.font.Font(K_GOODIE_FONT, K_GOODIE_FONT_DIM).render(letter, True, (0,0,250), (255,255,255))
+        self.rect = self.image.get_rect()
+        self.rect.center = ((random.randint(100, K_WINDOW_DIM[0]),
+                            random.randint(0, K_WINDOW_DIM[1])))
+        
+    def kill(self, player=0):
+        game_master.game_m.hp_up(player)
+        sound_master.snd_master.play('1up')
+        self.die()
+        
+        

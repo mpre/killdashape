@@ -186,6 +186,12 @@ class player_box(box):
     def remove_star(self):
         self.star = None
         
+    def hp_up(self, hp=0):
+        if hp > 0:
+            self.hp = self.hp + hp
+        if self.hp > K_HP:
+            self.hp = K_HP
+        
 class enemy_junkie(pygame.sprite.Sprite):
     """Gli scarti generati dalla morte dei nemici"""
     def __init__(self, color, init_pos, vector):

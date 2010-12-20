@@ -188,6 +188,12 @@ class game_master(object):
         else:
             return 0
         
+    def hp_up(self, player=None):
+        if player:
+            player.hp_up(1)
+        else:
+            return 0
+        
     def is_dead(self, name, who):
         if name == 'enemy_box':
             self.points += K_ENEMY_BOX_PT

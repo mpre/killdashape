@@ -13,7 +13,7 @@ try:
     import elements
     from killdashape_k import *
     from game_master import *
-except Exceptio,message:
+except Exception,message:
     print 'useful_lib.py:',message
 
 pl_goodies = []

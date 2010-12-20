@@ -104,7 +104,7 @@ class triple_directed_weapon(base_weapon):
                             (self.father.rect.bottomright),
                              self.direction, father=self.father) 
                 bullets.add(x)
-                snd_master.play('shoot')
+                snd_master.play('triple_shoot')
                 if not self.ammo:
                     game_master.game_m.set_base_weapon(self.father)
                     self.kill()
